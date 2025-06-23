@@ -1,9 +1,11 @@
 import './Navbar.css'
-
+import logo from '../assets/logo.jpeg';
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <div className="logo">🏠 HomeHub</div>
+      <div className="logo">
+        <img src={logo} alt="UrbanEdge Mart Logo" style={{ height: '150px' }} />
+      </div>
 
       <input type="text" className="search" placeholder="Search furniture, decor..." />
 
@@ -22,3 +24,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
