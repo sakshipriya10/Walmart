@@ -1,13 +1,16 @@
-import './App.css';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import SignUp from "./register/SignUp.jsx";
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Hero />
-    </div>
+     <BrowserRouter>
+     <Routes>
+      {/* Default route goes to Signup */}
+      <Route path="/" element={<SignUp />} />
+
+    </Routes>
+    </BrowserRouter>
+    
   );
 }
 
