@@ -4,7 +4,9 @@ import SignUp from "./register/SignUp.jsx";
 import Login from "./Login/Login.jsx";
 import Home from "./components/Home.jsx";
 
+import TryOnPage from "./Pages/TryOnPage.jsx";
 import ShoppingPage from './GamifiedShopping/ShoppingPage.jsx';
+
 function App() {
   return (
      <BrowserRouter>
@@ -19,6 +21,7 @@ function App() {
      
 
       
+     <Route path="/TryOnPage" element={<TryOnPage/>} />      
     </Routes>
     </BrowserRouter>
    
