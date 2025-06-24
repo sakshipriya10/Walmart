@@ -1,4 +1,4 @@
-import './Navbar.css'
+  
 import logo from '../assets/logo.jpeg';
 export default function Navbar() {
   return (
@@ -24,4 +24,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
