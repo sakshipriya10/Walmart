@@ -1,8 +1,9 @@
 export default function Hero() {
   return (
-    <div className="w-screen min-h-screen flex justify-center items-start bg-pink-100">
-      <div className="w-[900px] bg-blue-100 text-gray-800 py-20 flex justify-center items-center rounded-2xl shadow-lg mt-12">
-        <div className="max-w-2xl text-center">
+    <div className="w-screen min-h-screen flex items-center justify-center bg-pink-100">
+      <div className="flex w-[1100px] items-center justify-between relative">
+        {/* Left: Content Box aligned left */}
+        <div className="w-[800px]h-[100px]  bg-blue-100 text-gray-600 py-14 flex flex-col justify-center rounded-2xl shadow-lg px-10 z-20">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             Find Your Perfect <span className="text-pink-400">Home Aesthetic.</span>
           </h1>
@@ -13,6 +14,12 @@ export default function Hero() {
             Shop Now &rarr;
           </button>
         </div>
+        {/* Right: Image */}
+        <img
+          src="https://thumbs.dreamstime.com/b/fashion-summer-women-clothes-set-cosmetics-accessories-flat-lay-top-view-91902924.jpg"
+          alt="Aesthetic Clothing and Accessories"
+          className="w-[420px] h-[370px] object-cover rounded-3xl shadow-2xl ml-12"
+        />
       </div>
     </div>
   );
