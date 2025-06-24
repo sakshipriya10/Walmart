@@ -20,32 +20,32 @@ export default function ShoppingPage() {
       
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto ">
-        <div className="bg-white rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
+        <div className=" rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <DailySpin />
         </div>
 
 
-       <div className="bg-white rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
+       <div className=" rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <ChallengesQuests />
         </div>
 
-       <div className="bg-white rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
+       <div className=" rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <AugmentedReality />
          
         </div>
 
 
-        <div className=" h-200 w-100 bg-white rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
+        <div className=" h-200 w-100  rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <Rewards />
         </div>
 
         
-        <div className="bg-white rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
+        <div className=" rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <ProductBadges />
         </div>
 
 
-        <div className="bg-white rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
+        <div className="rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <Leaderboard />
         </div>
 
