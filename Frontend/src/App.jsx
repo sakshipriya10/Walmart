@@ -7,12 +7,11 @@ import ShoppingPage from './GamifiedShopping/ShoppingPage.jsx';
 function App() {
   return (
      <BrowserRouter>
-    
-     <ShoppingPage />
      <Routes>
       {/* Default route goes to Signup */}
       <Route path="/" element={<SignUp />} />
       <Route path="/Login" element={<Login/>} />
+      <Route path="/ShoppingPage" element={<ShoppingPage/>} />
      
 
       
