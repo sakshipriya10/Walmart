@@ -35,7 +35,10 @@ export default function Navbar() {
 
       <ul className="flex space-x-6 ml-8 text-pink-700 font-semibold relative">
         <li className="hover:text-pink-400 cursor-pointer transition mt-3">Home</li>
-        <li className="hover:text-pink-400 cursor-pointer transition mt-3">About</li>
+        <Link to="/About">
+  <li className="hover:text-pink-400 cursor-pointer transition mt-3">About</li>
+</Link>
+
         <li ref={domNode} className="relative">
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -46,8 +49,8 @@ export default function Navbar() {
           </button>
           {dropdownOpen && (
             <div className="absolute top-full mt-2 w-48 rounded-md bg-white shadow-lg z-50">
-              <a href="/virtual" className="block px-4 py-2 hover:bg-pink-100 text-sm">Virtual Try-On</a>
-              <a href="/Gamified-Shopping" className="block px-4 py-2 hover:bg-pink-100 text-sm">Gamified Shopping</a>
+              <a href="/TryOnPage" className="block px-4 py-2 hover:bg-pink-100 text-sm">Virtual Try-On</a>
+              <a href="/ShoppingPage" className="block px-4 py-2 hover:bg-pink-100 text-sm">Gamified Shopping</a>
               <a href="/ai-recommendations" className="block px-4 py-2 hover:bg-pink-100 text-sm">AI Recommendations</a>
             </div>
           )}
@@ -60,7 +63,9 @@ export default function Navbar() {
 
 
 
-        <li className="hover:text-pink-400 cursor-pointer transition mt-3">User Profile</li>
+        <li className="hover:text-pink-400 cursor-pointer transition mt-3">
+          <Link to="/UserProfile">User Profile</Link>
+        </li>
       </ul>
 
       <div className="flex items-center space-x-4 ml-8">
