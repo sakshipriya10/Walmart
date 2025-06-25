@@ -8,6 +8,12 @@ import UserProfile from "./UserProfile/UserProfile.jsx";
 import TryOnPage from "./Pages/TryOnPage.jsx";
 import ShoppingPage from './GamifiedShopping/ShoppingPage.jsx';
 
+<<<<<<< Updated upstream
+=======
+import ContactUs from "./Contact/ContactUs";
+
+
+>>>>>>> Stashed changes
 function App() {
   return (
      <BrowserRouter>
@@ -21,7 +27,10 @@ function App() {
       <Route path="/UserProfile" element={<UserProfile />} />
       {/* Redirect to Home if no route matches */}
       
-     <Route path="/TryOnPage" element={<TryOnPage/>} />      
+     <Route path="/TryOnPage" element={<TryOnPage/>} />  
+
+     <Route path="/contact" element={<ContactUs />} />
+    
     </Routes>
     </BrowserRouter>
    

@@ -12,10 +12,10 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center h-full pl-12 max-w-3xl">
-        <h1 className="text-5xl md:text-6xl font-extrabold text-white-600 leading-tight mb-4  opacity-0 animate-fade-in-down ">
-          Find Your Perfect <br />
+        <h1 className="text-3xl md:text-4xl font-extrabold text-white-600 leading-tight mb-4  opacity-0 animate-fade-in-down ">
+          "Your taste. Your trends. <br />
           <span className="bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
-            Home Aesthetic.
+            Powered by UrbanEDGE Mart."
           </span>
         </h1>
 
