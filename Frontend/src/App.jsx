@@ -13,10 +13,10 @@ function App() {
      <Routes>
       {/* Default route goes to Signup */}
       
-      <Route path="/" element={<SignUp />} />
+      <Route path="/SignUp" element={<SignUp />} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/ShoppingPage" element={<ShoppingPage/>} />
-      <Route path="/Home" element={<Home />} />
+      <Route path="/" element={<Home />} />
       
      <Route path="/TryOnPage" element={<TryOnPage/>} />      
     </Routes>

@@ -1,13 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 const Login = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-[#f0f4f8] font-sans">
+<div className="w-screen h-screen flex items-center justify-center bg-[#ffe4f0] font-sans">
+
       <div className="bg-white shadow-xl rounded-3xl flex w-[900px] h-[550px] overflow-hidden">
         {/* Left Side - Image and Text */}
         <div className="w-1/2 bg-[#fdf2f8] flex flex-col items-center justify-center p-8">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+            src="./Login.jsx"
             alt="Logo"
             className="w-40 mb-6"
           />
@@ -45,7 +48,7 @@ const Login = () => {
             />
 
             <div className="flex items-center justify-between mb-6 text-sm">
-              <label className="flex items-center">
+              <label className="text-pink-600 flex items-center">
                 <input type="checkbox" className="mr-2" />
                 Remember me
               </label>
@@ -59,11 +62,28 @@ const Login = () => {
               className="w-full p-3 rounded-xl bg-gradient-to-r from-blue-400 to-pink-400 text-white font-semibold hover:opacity-90 transition"
             >
               Sign In
-            </button>
+            </button> 
 
-            <div className="text-center my-4 text-sm text-[#999]">OR CONTINUE WITH</div>
+            <div className="text-center my-4 text-sm text-[#999]">OR New User ?</div>
+
+<div className="text-center mt-4">
+<Link to="/SignUp" className="text-blue-600">Sign up</Link>
+
+</div>
+
+
+
+{/* 
+            <div className="text-center my-4 text-sm text-[#999]">OR New User ?</div>
 
             <button
+              type="submit"
+              className="w-full p-3 rounded-xl bg-gradient-to-r from-blue-400 to-pink-400 text-white font-semibold hover:opacity-90 transition"
+            >
+              Sign Up
+            </button>
+
+            {/* <button
               type="button"
               className="w-full p-3 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-100 transition"
             >
@@ -73,7 +93,7 @@ const Login = () => {
                 className="w-5 h-5"
               />
               Sign in with Google
-            </button>
+            </button> */} 
 
             <p className="text-sm text-center mt-6 text-[#777]">
               Don’t have an account yet?{" "}
