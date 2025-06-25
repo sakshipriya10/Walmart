@@ -6,19 +6,13 @@ import Home from "./home/Home.jsx";
 import UserProfile from "./UserProfile/UserProfile.jsx";
 
 import TryOnPage from "./Pages/TryOnPage.jsx";
+import About from "./Pages/About.jsx";
 import ShoppingPage from './GamifiedShopping/ShoppingPage.jsx';
-
-<<<<<<< Updated upstream
-=======
-import ContactUs from "./Contact/ContactUs";
-
-
->>>>>>> Stashed changes
+import ContactUs from './Contact/ContactUs.jsx';
 function App() {
   return (
      <BrowserRouter>
      <Routes>
-      {/* Default route goes to Signup */}
       
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/Login" element={<Login/>} />
@@ -28,6 +22,7 @@ function App() {
       {/* Redirect to Home if no route matches */}
       
      <Route path="/TryOnPage" element={<TryOnPage/>} />  
+     <Route path="/About" element={<About/>} />
 
      <Route path="/contact" element={<ContactUs />} />
     
