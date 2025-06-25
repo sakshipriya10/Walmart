@@ -4,7 +4,7 @@
     <nav className="  fixed top-0 w-full z-10 flex items-center justify-between bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100 px-8 py-3 shadow-md  border-pink-200">
       {/* Logo as text */}
       <div className="flex items-center">
-        <span className="text-2xl font-bold text-pink-500 tracking-wide">UrbanEDGE Mart</span>
+        <span className="text-2xl font-bold text-pink-500 tracking-wide">UrbanEdge MART</span>
       </div>
 
       {/* Search bar */}

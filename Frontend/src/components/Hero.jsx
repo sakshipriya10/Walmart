@@ -20,8 +20,7 @@ export default function Hero() {
         </h1>
 
         <p className="text-gray-600  font-semibold text-lg md:text-xl mb-6">
-          Shop curated collections of modern furniture, decor, and essentials designed
-          to elevate your living space.
+          Discover the latest trends in clothing and accessories. Curated styles and essentials to elevate your wardrobe for every season.
         </p>
          
   <button className="bg-pink-500 text-white px-3 py-1.5 rounded-full text-sm font-medium hover:bg-pink-700 transition">
