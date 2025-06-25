@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import image1 from "../assets/image1.png";
 
 const Login = () => {
   return (
 <div className="w-screen h-screen flex items-center justify-center bg-[#ffe4f0] font-sans">
+  <h1 className="text-3xl font-extrabold text-black absolute top-6 left-6">
+        UrbanEdgeMART
+      </h1>
 
       <div className="bg-white shadow-xl rounded-3xl flex w-[900px] h-[550px] overflow-hidden">
         {/* Left Side - Image and Text */}
         <div className="w-1/2 bg-[#fdf2f8] flex flex-col items-center justify-center p-8">
           <img
-            src="./Login.jsx"
+            src={image1}
             alt="Logo"
-            className="w-40 mb-6"
+            className="w-60 mb-6"
           />
           <h2 className="text-lg font-semibold text-[#333]">Discover Your Style</h2>
           <p className="text-sm text-[#555] mt-2 text-center">
