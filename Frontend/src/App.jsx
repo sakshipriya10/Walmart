@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SignUp from "./register/SignUp.jsx";
 import Login from "./Login/Login.jsx";
 import Home from "./home/Home.jsx";
@@ -9,11 +9,19 @@ import TryOnPage from "./Pages/TryOnPage.jsx";
 import About from "./Pages/About.jsx";
 import ShoppingPage from './GamifiedShopping/ShoppingPage.jsx';
 import ContactUs from './Contact/ContactUs.jsx';
-function App() {
+import Footer from "./components/Footer.jsx"
+
+
+function AppWrapper() {
+ const location = useLocation();
+
   return (
-     <BrowserRouter>
+ 
+ <div className="flex flex-col min-h-screen">
+  <div className="flex-grow">
+
+
      <Routes>
-      
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/ShoppingPage" element={<ShoppingPage/>} />
@@ -23,12 +31,25 @@ function App() {
       
      <Route path="/TryOnPage" element={<TryOnPage/>} />  
      <Route path="/About" element={<About/>} />
-
      <Route path="/contact" element={<ContactUs />} />
-    
     </Routes>
-    </BrowserRouter>
+
+
+  </div>
+ {/* ✅ Show footer only on Home page */}
+      {location.pathname === "/" && <Footer />}
+ 
+ </div>
    
+  );
+}
+
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppWrapper />
+    </BrowserRouter>
   );
 }
 
