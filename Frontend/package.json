@@ -12,7 +12,11 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
+<<<<<<< Updated upstream
     "framer-motion": "^12.19.1",
+=======
+    "axios": "^1.10.0",
+>>>>>>> Stashed changes
     "lru-cache": "^11.1.0",
     "lucide-react": "^0.523.0",
     "react": "^19.1.0",

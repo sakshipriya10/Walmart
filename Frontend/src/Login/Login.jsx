@@ -1,8 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import image1 from "../assets/image1.png";
+import  { useState } from "react";
+import axios from "axios";
+
 
 const Login = () => {
+ 
+const [emailInput, setEmailInput] = useState("");
+const [passwordInput, setPasswordInput] = useState("");
+
+const handleLogin = async (e) => {
+  e.preventDefault(); // prevent page reload
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/login", {
+      email: emailInput,
+      password: passwordInput,
+    });
+    console.log("Login Success", res.data);
+    alert("Login Successful");
+    // You can also store the token:
+    // localStorage.setItem("token", res.data.token);
+    // Navigate to dashboard
+  } catch (error) {
+    console.error("Login failed", error.response?.data?.message || error.message);
+    alert("Login failed: " + (error.response?.data?.message || "Something went wrong"));
+  }
+};
+
+
   return (
 <div className="w-screen h-screen flex items-center justify-center bg-[#ffe4f0] font-sans">
   <h1 className="text-3xl font-extrabold text-black absolute top-6 left-6">
@@ -41,6 +67,8 @@ const Login = () => {
               type="email"
               placeholder="name@pastel.com"
               className="w-full p-3 rounded-xl border border-[#ccc] mb-4 bg-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
             />
 
             <label className="block mb-2 text-sm text-[#555]">Your password</label>
@@ -48,6 +76,8 @@ const Login = () => {
               type="password"
               placeholder="••••••••"
               className="w-full p-3 rounded-xl border border-[#ccc] mb-2 bg-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
             />
 
             <div className="flex items-center justify-between mb-6 text-sm">
@@ -62,6 +92,7 @@ const Login = () => {
 
             <button
               type="submit"
+                onClick={handleLogin}
               className="w-full p-3 rounded-xl bg-gradient-to-r from-blue-400 to-pink-400 text-white font-semibold hover:opacity-90 transition"
             >
               Sign In
