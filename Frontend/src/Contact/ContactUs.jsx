@@ -1,45 +1,88 @@
- 
 
-
- 
- import React from "react";
-
+import React, { useState } from "react";
+import UserMap from "./UserMap";
 
 
 const ContactForm = () => {
+	 const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+	const [status, setStatus] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("Sending...");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setStatus("Something went wrong");
+    }
+  };
+
+
 	return (
-		<form className="lg:pt-2">
-			<div className="mb-3 mt-2">
-				<input
-					type="text"
-					placeholder="Name"
-					className="min-h-10 leading-9 border-transparent   p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
-				/>
-			</div>
-			<div className="mb-3 mt-2">
-				<input
-					type="email"
-					placeholder="Email"
-					className="min-h-10 leading-9 border-transparent  dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
-				/>
-			</div>
-			<div className="mb-3">
-				<textarea
-					rows={3}
-					name="message"
-					placeholder="Your Message"
-					className="min-h-20 leading-9 border-transparent   dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
-				/>
-			</div>
-			<div className="text-end">
-				<button
-					type="submit"
-					className="w-full min-h-10 bg-pink-300 border border-pink-600 text-white px-5 py-2 hover:bg-pink-400 cursor-pointer transition rounded-4xl"
-				>
-					Send Message
-				</button>
-			</div>
-		</form>
+	 <form className="lg:pt-2" onSubmit={handleSubmit}>
+      <div className="mb-3 mt-2">
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleChange}
+          className="min-h-10 leading-9 border-transparent dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
+        />
+      </div>
+      <div className="mb-3 mt-2">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          className="min-h-10 leading-9 border-transparent dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
+        />
+      </div>
+      <div className="mb-3">
+        <textarea
+          rows={3}
+          name="message"
+          placeholder="Your Message"
+          value={formData.message}
+          onChange={handleChange}
+          className="min-h-20 leading-9 border-transparent dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
+        />
+      </div>
+      <div className="text-end">
+        <button
+          type="submit"
+          className="w-full min-h-10 bg-pink-300 border border-pink-600 text-white px-5 py-2 hover:bg-pink-400 cursor-pointer transition rounded-4xl"
+        >
+          Send Message
+        </button>
+      </div>
+      <p className="mt-2 text-sm text-gray-600">{status}</p>
+    </form>
+
 	);
 };
 
@@ -86,7 +129,13 @@ const Map = () => {
 const ContactUs16 = () => {
 	return (
 		<section className="ezy__contact16 light bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100  md:p-24 h-screen w-screen">
-			<Map />
+		
+<div className="absolute top-0 bottom-0 right-0 w-full lg:w-1/2 h-full">
+  <UserMap />
+</div>
+
+
+
 
 			<div className="container px-4 mx-auto">
 				<div className="grid grid-cols-12 gap-4">
