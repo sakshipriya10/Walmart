@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
+  const navigate = useNavigate();
+
   return (
     <div className="w-screen h-screen bg-gradient-to-br from-[#F8BBD0] to-[#E1BEE7] flex flex-col relative justify-center items-center p-6">
     <div className="min-h-screen flex items-center justify-center bg-pink-100">
@@ -16,15 +19,10 @@ export default function UserProfile() {
         {/* User Info */}
         <h2 className="text-3xl font-extrabold text-pink-500 mb-1 tracking-wide">Sakshi Priya</h2>
         <p className="text-gray-600 mb-1 text-lg">sakshi@example.com</p>
+        <p className="text-gray-600 mb-1 text-lg">7667870198</p>
         <p className="text-blue-400 mb-6 font-medium">Patna, India</p>
         {/* Shipping Address */}
-        <div className="w-full mb-4">
-          <h3 className="font-semibold text-lg text-pink-500 mb-1">Shipping Address</h3>
-          <p className="text-gray-700 text-base leading-relaxed">
-            123 MG Road, Kankarbagh,<br />
-            Patna, Bihar – 800020
-          </p>
-        </div>
+        
         {/* Order Summary */}
         <div className="w-full mb-6">
           <h3 className="font-semibold text-lg text-blue-400 mb-1">Order Summary</h3>
@@ -35,13 +33,20 @@ export default function UserProfile() {
           </div>
         </div>
         {/* Action Buttons */}
-        <div className="flex gap-4 mt-2">
-          <button className="bg-pink-200 text-pink-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition">Wishlist</button>
-          <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">Edit Profile</button>
-          <button className="bg-pink-100 text-pink-600 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-200 transition">Logout</button>
+         <div className="grid grid-cols-3 gap-3 w-full">
+          <button className="bg-pink-100 text-pink-600 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition">Wishlist</button>
+          <button className="bg-pink-100 text-pink-600 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition">Edit Profile</button>
+          <button className="bg-pink-100 text-pink-600 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition">Logout</button>
+          <button 
+          className="bg-pink-100 text-pink-600 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition"
+          onClick={() => navigate("/address")}
+          >
+            Address
+          </button>
+          <button className="bg-pink-100 text-pink-600 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition">Orders</button>
         </div>
       </div>
     </div>
     </div>
   );
-}
+};
