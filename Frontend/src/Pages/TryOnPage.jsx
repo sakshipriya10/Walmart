@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const TryOnPage = () => {
   const [category, setCategory] = useState("clothes");
+  const [cameraOn, setCameraOn] = useState(false);
+  const videoRef = useRef(null);
+  const streamRef = useRef(null);
+
+  useEffect(() => {
+    if (cameraOn && videoRef.current) {
+      // Start camera only after video element is mounted
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+          videoRef.current.srcObject = stream;
+          streamRef.current = stream;
+        })
+        .catch((err) => {
+          console.error("Error accessing camera:", err);
+        });
+    }
+  }, [cameraOn]);
+
+  const stopCamera = () => {
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+    setCameraOn(false);
+  };
 
   return (
     <div className="w-screen h-screen bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA] flex flex-col p-6">
-      <h1 className="text-4xl font-bold text-[#4A4A4A] text-center mb-6">
-        Virtual Try-On
-      </h1>
+      <h1 className="text-4xl font-bold text-[#4A4A4A] text-center mb-6">Virtual Try-On</h1>
 
       {/* Category Switch */}
       <div className="flex justify-center gap-4 mb-6">
@@ -36,12 +57,24 @@ const TryOnPage = () => {
       {/* Main Layout */}
       <div className="flex flex-1 gap-6">
         {/* Left: Try-On Area */}
-        <div className="flex flex-col items-center justify-center flex-1  bg-[#E6E6FA] rounded-2xl p-6 shadow-lg">
-          <div className="w-full h-full max-h-[500px] bg-[#F3F4F6] rounded-xl flex items-center justify-center">
-            <span className="text-gray-400">Your image or live feed</span>
+        <div className="flex flex-col items-center justify-center flex-1 bg-[#E6E6FA] rounded-2xl p-6 shadow-lg">
+          <div className="w-full h-full max-h-[500px] bg-[#F3F4F6] rounded-xl flex items-center justify-center overflow-hidden">
+            {cameraOn ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-full object-cover rounded-xl"
+              />
+            ) : (
+              <span className="text-gray-400">Your image or live feed</span>
+            )}
           </div>
-          <button className="mt-6 bg-[#81D4FA] text-white px-5 py-2 rounded-lg hover:bg-[#4FC3F7] transition">
-            Upload Photo / Start Camera
+          <button
+            className="mt-6 bg-[#81D4FA] text-white px-5 py-2 rounded-lg hover:bg-[#4FC3F7] transition"
+            onClick={() => setCameraOn((prev) => !prev)}
+          >
+            {cameraOn ? "Stop Camera" : "Start Camera"}
           </button>
         </div>
 
