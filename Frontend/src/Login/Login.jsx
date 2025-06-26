@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import image1 from "../assets/image1.png";
 import  { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
  
 const [emailInput, setEmailInput] = useState("");
 const [passwordInput, setPasswordInput] = useState("");
+const navigate = useNavigate();
 
 const handleLogin = async (e) => {
   e.preventDefault(); // prevent page reload
@@ -19,6 +21,7 @@ const handleLogin = async (e) => {
     });
     console.log("Login Success", res.data);
     alert("Login Successful");
+     navigate("/");
     // You can also store the token:
     // localStorage.setItem("token", res.data.token);
     // Navigate to dashboard

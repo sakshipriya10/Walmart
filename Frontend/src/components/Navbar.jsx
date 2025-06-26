@@ -2,7 +2,6 @@
 
 import { Link } from "react-router-dom";
 
-
 function useClickOutside(handler) {
   const domNode = useRef();
   useEffect(() => {
