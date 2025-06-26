@@ -10,6 +10,7 @@ import About from "./Pages/About.jsx";
 import ShoppingPage from './GamifiedShopping/ShoppingPage.jsx';
 import ContactUs from './Contact/ContactUs.jsx';
 import Footer from "./components/Footer.jsx"
+import AddressPage from "./UserProfile/AddressPage.jsx";
 
 
 function AppWrapper() {
@@ -32,6 +33,8 @@ function AppWrapper() {
      <Route path="/TryOnPage" element={<TryOnPage/>} />  
      <Route path="/About" element={<About/>} />
      <Route path="/contact" element={<ContactUs />} />
+
+     <Route path="/address" element={<AddressPage />} />
     </Routes>
 
 
