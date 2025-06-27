@@ -17,15 +17,17 @@ const UserProfile = () => {
       }
 
       try {
-        const res = await axios.post(
+          const res = await axios.post(
           "http://localhost:5000/api/user/userDetails",
           {},
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            withCredentials: true,
           }
-        );
+          );
+    
 
         console.log("User data:", res.data);
         setUserData(res.data);

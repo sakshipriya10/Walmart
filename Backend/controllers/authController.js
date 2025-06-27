@@ -38,6 +38,10 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log("Login attempt for email:", email);
+  console.log("Password provided:", password ? "**" : "No password provided");
+  
+  
 
   try {
     // Check if user exists
@@ -53,7 +57,7 @@ export const loginUser = async (req, res) => {
       expiresIn: "1d",
     });
     
-    res.cookie("accessToken", token, { httpOnly: true, secure: true, sameSite: "strict" });
+    res.cookie("accessToken", token, { httpOnly: true, secure: false, sameSite: "strict" });
 
     res.status(200).json({ token, user: { email: user.email, id: user._id } });
   } catch (err) {

@@ -9,7 +9,10 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Vite default port
+  credentials: true,
+}));
 app.use(express.json());
 
 // Routes
@@ -22,4 +25,3 @@ connectDB();
 // ✅ Fix: backticks for console log string
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-

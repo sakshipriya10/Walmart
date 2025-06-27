@@ -18,7 +18,7 @@ const handleLogin = async (e) => {
     const res = await axios.post("http://localhost:5000/api/auth/login", {
       email: emailInput,
       password: passwordInput,
-    });
+    },{ withCredentials: true }); // include credentials for cookie handling
     console.log("Login Success", res.data);
     alert("Login Successful");
      navigate("/Home");

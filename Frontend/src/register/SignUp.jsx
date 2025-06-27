@@ -35,7 +35,7 @@ const SignUp = () => {
   e.preventDefault();
   try {
     const res = await axios.post("http://localhost:5000/api/auth/register", {
-      name: formData.fullName,   // 👈 Backend expects `name`, not `fullName`
+      fullName: formData.fullName,   // 👈 Backend expects name, not fullName
       email: formData.email,
       password: formData.password,
       gender: formData.gender,
