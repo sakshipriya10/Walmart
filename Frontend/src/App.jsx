@@ -12,6 +12,11 @@ import ContactUs from './Contact/ContactUs.jsx';
 import Footer from "./components/Footer.jsx"
 import AddressPage from "./UserProfile/AddressPage.jsx";
 
+import Products from "./Pages/Products";
+import ProductDetails from "./Pages/ProductDetails";
+import Cart from "./Pages/Cart";
+
+
 
 function AppWrapper() {
  const location = useLocation();
@@ -35,6 +40,10 @@ function AppWrapper() {
      <Route path="/contact" element={<ContactUs />} />
 
      <Route path="/address" element={<AddressPage />} />
+
+     <Route path="/products" element={<Products />} />
+     <Route path="/product/:id" element={<ProductDetails />} />
+     <Route path="/cart" element={<Cart />} />
     </Routes>
 
 
