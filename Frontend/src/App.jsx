@@ -12,6 +12,12 @@ import ContactUs from './Contact/ContactUs.jsx';
 import Footer from "./components/Footer.jsx"
 import AddressPage from "./UserProfile/AddressPage.jsx";
 
+import Products from "./Pages/Products";
+import ProductDetails from "./Pages/ProductDetails";
+import Cart from "./Pages/Cart";
+
+
+import AssistantPage from "./assistant/AssistantPage.jsx";
 
 function AppWrapper() {
  const location = useLocation();

@@ -1,5 +1,6 @@
  import React, { useState, useEffect, useRef } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 function useClickOutside(handler) {
@@ -21,6 +22,8 @@ function useClickOutside(handler) {
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const domNode = useClickOutside(() => setDropdownOpen(false));
+  const navigate = useNavigate();
+const { cart } = useCart();
 
   return (
     <nav className="fixed top-0 w-full z-10 flex items-center justify-between bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100 px-8 py-3 shadow-md border-pink-200">
@@ -50,7 +53,7 @@ export default function Navbar() {
             <div className="absolute top-full mt-2 w-48 rounded-md bg-white shadow-lg z-50">
               <a href="/TryOnPage" className="block px-4 py-2 hover:bg-pink-100 text-sm">Virtual Try-On</a>
               <a href="/ShoppingPage" className="block px-4 py-2 hover:bg-pink-100 text-sm">Gamified Shopping</a>
-              <a href="/ai-recommendations" className="block px-4 py-2 hover:bg-pink-100 text-sm">AI Recommendations</a>
+              <a href="/products" className="block px-4 py-2 hover:bg-pink-100 text-sm">Shop Now</a>
             </div>
           )}
         </li>
@@ -68,10 +71,14 @@ export default function Navbar() {
       </ul>
 
       <div className="flex items-center space-x-4 ml-8">
-        <span className="relative text-2xl text-blue-400 cursor-pointer hover:text-pink-400 transition">
-          🛒
-          <sup className="absolute -top-2 -right-3 bg-pink-300 text-xs text-white rounded-full px-2">3</sup>
-        </span>
+        <span onClick={() => navigate("/cart")} className="relative text-2xl cursor-pointer">
+  🛒
+  {cart.length > 0 && (
+    <sup className="absolute -top-2 -right-3 bg-pink-500 text-xs text-white rounded-full px-2">
+      {cart.length}
+    </sup>
+  )}
+</span>
           <Link to="/Login">
             <button className="px-4 py-2 bg-pink-200 text-pink-900 rounded-3xl font-semibold hover:bg-pink-300 transition">Login</button>
           </Link>
