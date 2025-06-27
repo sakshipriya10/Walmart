@@ -17,6 +17,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 
 
+import AssistantPage from "./assistant/AssistantPage.jsx";
 
 function AppWrapper() {
  const location = useLocation();
@@ -40,10 +41,6 @@ function AppWrapper() {
      <Route path="/contact" element={<ContactUs />} />
 
      <Route path="/address" element={<AddressPage />} />
-
-     <Route path="/products" element={<Products />} />
-     <Route path="/product/:id" element={<ProductDetails />} />
-     <Route path="/cart" element={<Cart />} />
     </Routes>
 
 

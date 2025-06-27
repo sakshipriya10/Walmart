@@ -15,7 +15,7 @@
 
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, Avenir, Helvetica,  Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -81,7 +81,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #feffff;
+    color: #011212;
     background-color: #ffffff;
   }
   a:hover {
