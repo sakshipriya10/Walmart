@@ -2,6 +2,7 @@ import React from "react";
 import clothes from "../assets/clothes.png";
 import makeup from "../assets/makeup.png";
 import accessories from "../assets/accessories.png";
+import { Link } from "react-router-dom";
 // Removed featuresImg import since it's not used anymore
 
 const About = () => {
@@ -87,9 +88,12 @@ const About = () => {
           <p className="text-gray-700 mb-6">
             Experience a new way of shopping that's fun, fashionable, and futuristic.
           </p>
-          <button className="px-6 py-3 bg-[#F2A7B3] text-white font-semibold rounded-full shadow-lg hover:bg-[#e18ca1] transition">
+          <Link to = "/">
+           <button className="px-6 py-3 bg-[#F2A7B3] text-white font-semibold rounded-full shadow-lg hover:bg-[#e18ca1] transition">
             Start Shopping
           </button>
+          </Link>
+         
         </div>
       </div>
     </div>
