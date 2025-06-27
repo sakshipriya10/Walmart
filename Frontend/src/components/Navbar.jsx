@@ -72,8 +72,15 @@ export default function Navbar() {
           🛒
           <sup className="absolute -top-2 -right-3 bg-pink-300 text-xs text-white rounded-full px-2">3</sup>
         </span>
-        <button className="px-4 py-2 bg-pink-200 text-pink-900 rounded-3xl font-semibold hover:bg-pink-300 transition">Login</button>
-        <button className="px-4 py-2 bg-pink-200 text-pink-900 rounded-3xl font-semibold hover:bg-pink-300 transition">Sign Up</button>
+          <Link to="/Login">
+            <button className="px-4 py-2 bg-pink-200 text-pink-900 rounded-3xl font-semibold hover:bg-pink-300 transition">Login</button>
+          </Link>
+
+           <Link to="/SignUp">
+          <button className="px-4 py-2 bg-pink-200 text-pink-900 rounded-3xl font-semibold hover:bg-pink-300 transition">Sign Up</button>
+        </Link>
+        
+        
       </div>
     </nav>
   );
