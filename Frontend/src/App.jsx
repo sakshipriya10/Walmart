@@ -35,6 +35,7 @@ function AppWrapper() {
      <Route path="/contact" element={<ContactUs />} />
 
      <Route path="/address" element={<AddressPage />} />
+     <Route path="/profile" element={<UserProfile />} />
     </Routes>
 
 

@@ -23,7 +23,8 @@ const handleLogin = async (e) => {
     alert("Login Successful");
      navigate("/Home");
     // You can also store the token:
-    // localStorage.setItem("token", res.data.token);
+    localStorage.setItem("token", res.data.token);
+    //localStorage.setItem("user", JSON.stringify(res.data.user));
     // Navigate to dashboard
   } catch (error) {
     console.error("Login failed", error.response?.data?.message || error.message);

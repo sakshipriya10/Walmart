@@ -32,15 +32,24 @@ const SignUp = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
-      alert(res.data.message);
-      navigate("/login");
-    } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
-    }
-  };
+  e.preventDefault();
+  try {
+    const res = await axios.post("http://localhost:5000/api/auth/register", {
+      name: formData.fullName,   // 👈 Backend expects `name`, not `fullName`
+      email: formData.email,
+      password: formData.password,
+      gender: formData.gender,
+      phone: formData.phone,
+      interests: formData.interests,
+    });
+
+    alert(res.data.message);
+    navigate("/login");
+  } catch (err) {
+    alert(err.response?.data?.message || "Registration failed");
+  }
+};
+;
 
   return (
     <div className="w-screen h-screen bg-gradient-to-br from-[#F8BBD0] to-[#E1BEE7] flex flex-col relative justify-center items-center p-6">
