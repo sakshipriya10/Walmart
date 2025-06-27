@@ -21,7 +21,7 @@ const handleLogin = async (e) => {
     });
     console.log("Login Success", res.data);
     alert("Login Successful");
-     navigate("/");
+     navigate("/Home");
     // You can also store the token:
     // localStorage.setItem("token", res.data.token);
     // Navigate to dashboard

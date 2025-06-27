@@ -23,10 +23,10 @@ function AppWrapper() {
 
 
      <Routes>
-      <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/" element={<SignUp />} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/ShoppingPage" element={<ShoppingPage/>} />
-      <Route path="/" element={<Home />} />
+      <Route path="/Home" element={<Home />} />
       <Route path="/UserProfile" element={<UserProfile />} />
       {/* Redirect to Home if no route matches */}
       
