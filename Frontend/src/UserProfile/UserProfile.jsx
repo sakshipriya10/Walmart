@@ -6,39 +6,28 @@ import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  console.log("hi");
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const token = localStorage.getItem("token");
+   const fetchUserProfile = async () => {
+  try {
+    console.log("Fetching profile...");
+    const token = localStorage.getItem("token");
 
-      if (!token) {
-        navigate("/login");
-        return;
-      }
+const res = await axios.get("http://localhost:5000/api/user/userDetails", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+    setUserData(res.data);
+  } catch (err) {
+    console.error("Error fetching user profile", err);
+    navigate("/login");
+  }
+};
 
-      try {
-          const res = await axios.post(
-          "http://localhost:5000/api/user/userDetails",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true,
-          }
-          );
-    
-
-        console.log("User data:", res.data);
-        setUserData(res.data);
-      } catch (err) {
-        console.error("Error fetching user profile", err);
-        navigate("/login");
-      }
-    };
-
-    fetchUserProfile();
-  }, [navigate]);
+  fetchUserProfile();
+}, [navigate]);
 
   if (!userData) return <div>Loading user data...</div>;
 

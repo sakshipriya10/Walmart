@@ -66,7 +66,7 @@ const { cart } = useCart();
 
 
         <li className="hover:text-pink-400 cursor-pointer transition mt-3">
-          <Link to="/UserProfile">User Profile</Link>
+          <Link to="/profile">User Profile</Link>
         </li>
       </ul>
 

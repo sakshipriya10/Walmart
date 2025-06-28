@@ -3,6 +3,6 @@ import { getUserDetails } from "../controllers/userController.js";
 import { verifyJWT } from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
-router.post("/userDetails",verifyJWT, getUserDetails);
+router.get("/userDetails",verifyJWT, getUserDetails);
 
 export default router;

@@ -29,11 +29,12 @@ function AppWrapper() {
 
 
      <Routes>
-      <Route path="/" element={<SignUp />} />
+      <Route path="/SignUp" element={<SignUp />} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/ShoppingPage" element={<ShoppingPage/>} />
       <Route path="/Home" element={<Home />} />
       <Route path="/UserProfile" element={<UserProfile />} />
+      <Route path="/" element={<Home />} />
       {/* Redirect to Home if no route matches */}
       
      <Route path="/TryOnPage" element={<TryOnPage/>} />  
@@ -43,10 +44,12 @@ function AppWrapper() {
      <Route path="/address" element={<AddressPage />} />
      <Route path="/profile" element={<UserProfile />} />
       <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/assistant" element={<AssistantPage />} />
-
+      <Route path="/products/:id" element={<ProductDetails />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/assistant" element={<AssistantPage />} />
+      
+      {/* Redirect to Home if no route matches */}
+      <Route path="*" element={<Navigate to="/Home" />} />
     </Routes>
 
 
