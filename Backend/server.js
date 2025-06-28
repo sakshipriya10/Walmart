@@ -8,7 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 
 import morgan from "morgan";
 
-import spinRoutes from "./routes/spinRoutes.js";
+import spinRoutes from './routes/spinRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -32,7 +32,7 @@ app.use(morgan("dev"));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
-app.use("/api", spinRoutes);
+app.use('/api', spinRoutes);
 app.use("/api/user", userRoutes);
 
 // MongoDB connection

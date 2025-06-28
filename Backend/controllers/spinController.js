@@ -1,15 +1,29 @@
-import Spin from "../models/spinModel.js";
-import spinOptions from "../utils/SpinOptions.js";
+import Spin from '../models/spinModel.js';
 
-export const spinWheel = (req, res) => {
-  try {
-    const rewards = [100, 200, 500, 1000];
-    const randomIndex = Math.floor(Math.random() * rewards.length);
-    const reward = rewards[randomIndex];
+const rewards = ['10 Coins', '50 Coins', '1 Free Item', 'Try Again'];
 
-    return res.status(200).json({ success: true, reward });
-  } catch (error) {
-    console.error("Spin Controller Error:", error);
-    return res.status(500).json({ success: false, message: "Something went wrong!" });
+export const handleSpin = async (req, res) => {
+  const { userId } = req.body;
+  if (!userId) return res.status(400).json({ message: 'User ID required' });
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let spinData = await Spin.findOne({ userId });
+
+  if (spinData && spinData.lastSpin >= today) {
+    return res.status(403).json({ message: 'Already spun today' });
   }
+
+  const reward = rewards[Math.floor(Math.random() * rewards.length)];
+
+  if (!spinData) {
+    spinData = new Spin({ userId });
+  }
+
+  spinData.lastSpin = new Date();
+  spinData.reward = reward;
+  await spinData.save();
+
+  res.json({ success: true, reward });
 };

@@ -3,7 +3,7 @@ import { FaApple, FaGooglePlay, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "r
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-gray-800 border-t mt-10">
+    <footer className="bg-white text-gray-800 border-t mt-4">
       {/* Top Info Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center py-8 px-4 md:px-16">
         <div>

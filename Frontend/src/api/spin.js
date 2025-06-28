@@ -1,15 +1,15 @@
 // Frontend/src/api/spin.js
 
-import axios from 'axios';
-
-const BASE_URL = "http://localhost:5000/api/spin";
-
-export const spinWheel = async () => {
+export const spinWheelAPI = async (userId) => {
   try {
-    const response = await axios.post(`${BASE_URL}`);
-    return response.data;
-  } catch (error) {
-    console.error("Spin failed:", error);
-    throw error;
+    const response = await fetch('http://localhost:5000/api/spin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    return { error: err.message };
   }
 };

@@ -1,9 +1,9 @@
-import express from "express";
-import { spinWheel } from "../controllers/spinController.js";
-// import { protect } from "../middleware/authMiddleware.js"; // if using auth
+import express from 'express';
+import { handleSpin } from '../controllers/spinController.js';
 
 const router = express.Router();
-router.post("/spin", spinWheel);
 
+router.post('/spin', handleSpin);
 
 export default router;
+

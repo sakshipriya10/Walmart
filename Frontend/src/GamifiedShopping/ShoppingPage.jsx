@@ -9,7 +9,7 @@ import FlashSale from "./FlashSale";
 
 export default function ShoppingPage() {
   return (
-    <div className=" w-full min-h-screen bg-gray-100 px-8 py-8 p-0 m-0 ">
+    <div className=" w-screen  h-screen bg-gray-100 px-8 py-8 p-0 m-0 ">
       {/* Header with Flash Sale */}
       <div className=" flex items-center justify-between  mu-0 mb-2 bg-white px-3 py-4 rounded-xl shadow m-0 p-0">
         <h1 className="text-3xl font-bold text-gray-900">Gamified Shopping</h1>

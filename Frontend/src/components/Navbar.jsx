@@ -1,4 +1,4 @@
- import React, { useState, useEffect, useRef } from "react";
+  import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
@@ -26,8 +26,8 @@ export default function Navbar() {
 const { cart } = useCart();
 
   return (
-    <nav className="fixed top-0 w-full z-10 flex items-center justify-between bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100 px-8 py-3 shadow-md border-pink-200">
-      <div className="text-2xl font-bold text-pink-500">UrbanEDGE Mart</div>
+    <nav className=" w-full  flex items-center justify-between bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100 px-8 py-3 shadow-md border-pink-200">
+      <div className="text-3xl font-bold text-pink-500">UrbanEDGE Mart</div>
 
       <input
         type="text"

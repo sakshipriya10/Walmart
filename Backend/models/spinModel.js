@@ -1,20 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const spinSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-  lastSpin: {
-    type: Date,
-    default: null,
-  },
-  totalPoints: {
-    type: Number,
-    default: 0,
-  }
+  userId: { type: String, required: true },
+  lastSpin: { type: Date, default: null },
+  reward: { type: String, default: null },
 });
 
-const Spin = mongoose.model("Spin", spinSchema);
-export default Spin;
+export default mongoose.model('Spin', spinSchema);
+
