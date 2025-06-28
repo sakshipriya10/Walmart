@@ -42,6 +42,11 @@ function AppWrapper() {
 
      <Route path="/address" element={<AddressPage />} />
      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/assistant" element={<AssistantPage />} />
+
     </Routes>
 
 
