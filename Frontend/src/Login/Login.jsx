@@ -105,7 +105,7 @@ const handleLogin = async (e) => {
             <div className="text-center my-4 text-sm text-[#999]">OR New User ?</div>
 
 <div className="text-center mt-4">
-<Link to="/SignUp" className="text-blue-600">Sign up</Link>
+<Link to="/" className="text-blue-600">Sign up</Link>
 
 </div>
 

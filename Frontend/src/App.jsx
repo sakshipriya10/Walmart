@@ -47,7 +47,7 @@ function AppWrapper() {
 
   </div>
  {/* ✅ Show footer only on Home page */}
-      {location.pathname === "/" && <Footer />}
+      {location.pathname === "/Home" && <Footer />}
  
  </div>
    
