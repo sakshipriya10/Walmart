@@ -23,6 +23,7 @@ const Footer = () => {
         </div>
       </div>
 
+
       {/* Middle Info Section */}
       <div className="border-t py-10 px-4 md:px-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
         {/* Logo + Contact */}
