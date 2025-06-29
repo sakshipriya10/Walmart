@@ -6,39 +6,42 @@ import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-  console.log("hi");
 
   useEffect(() => {
-   const fetchUserProfile = async () => {
-  try {
-    console.log("Fetching profile...");
-    const token = localStorage.getItem("token");
+    const fetchUserProfile = async () => {
+      const token = localStorage.getItem("token");
 
-const res = await axios.get("http://localhost:5000/api/user/userDetails", {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
-    setUserData(res.data);
-  } catch (err) {
-    console.error("Error fetching user profile", err);
-    navigate("/login");
-  }
-};
+      // If no token found, redirect to SignUp
+      if (!token) {
+        console.warn("No token found. Redirecting to signup.");
+        navigate("/signup");
+        return;
+      }
 
-  fetchUserProfile();
-}, [navigate]);
+      try {
+        const res = await axios.get("http://localhost:5000/api/user/userDetails", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserData(res.data);
+      } catch (err) {
+        console.error("Error fetching user profile:", err);
+        // If token is invalid or expired, clear it and redirect
+        localStorage.removeItem("token");
+        navigate("/signup");
+      }
+    };
+
+    fetchUserProfile();
+  }, [navigate]);
 
   if (!userData) return <div>Loading user data...</div>;
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-br from-[#F8BBD0] to-[#E1BEE7] flex flex-col relative justify-center items-center p-6">
+    <div className="w-screen h-screen bg-gradient-to-br from-[#F8BBD0] to-[#E1BEE7] flex flex-col justify-center items-center p-6">
       <div className="min-h-screen flex items-center justify-center bg-pink-100">
         <div className="w-[420px] bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center border border-pink-100">
-          {/* Profile Image */}
-          
-
-          {/* User Info */}
           <h2 className="text-3xl font-extrabold text-pink-500 mb-1 tracking-wide">
             {userData.fullName}
           </h2>
@@ -50,13 +53,9 @@ const res = await axios.get("http://localhost:5000/api/user/userDetails", {
             Gender: <span className="font-medium">{userData.gender || "N/A"}</span>
           </p>
           <p className="text-gray-600 mb-1 text-lg">
-            Interests:{" "}
-            <span className="font-medium">
-              {userData.interests?.join(", ") || "N/A"}
-            </span>
+            Interests: <span className="font-medium">{userData.interests?.join(", ") || "N/A"}</span>
           </p>
 
-          {/* Action Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mt-4 w-full">
             <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">
               Wishlist
@@ -64,11 +63,18 @@ const res = await axios.get("http://localhost:5000/api/user/userDetails", {
             <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">
               Edit Profile
             </button>
-            <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">
+            <button
+              className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition"
+              onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/login");
+              }}
+            >
               Logout
             </button>
-            <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition"
-            onClick={() => navigate("/address")}
+            <button
+              className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition"
+              onClick={() => navigate("/address")}
             >
               Address
             </button>
