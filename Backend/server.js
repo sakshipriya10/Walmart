@@ -4,11 +4,14 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js"; 
 import contactRoutes from "./routes/contactRoutes.js";
-import userRoutes from "./routes/userRoutes.js"; 
+import userRoutes from "./routes/userRoutes.js";
+import tryonRoutes from "./routes/tryonRoutes.js"; 
 
 import morgan from "morgan";
 
 import spinRoutes from './routes/spinRoutes.js';
+
+import addressRoutes from "./routes/addressRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +25,8 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
+app.use("/api/address", addressRoutes);
+
 
 // app.use(cors({
 //   origin: 'http://localhost:5173',  //  Vite runs on this
@@ -34,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use('/api', spinRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/tryon", tryonRoutes);
 
 // MongoDB connection
 connectDB();
