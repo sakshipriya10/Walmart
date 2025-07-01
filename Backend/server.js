@@ -4,7 +4,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js"; 
 import contactRoutes from "./routes/contactRoutes.js";
-import userRoutes from "./routes/userRoutes.js"; 
+import userRoutes from "./routes/userRoutes.js";
+import tryonRoutes from "./routes/tryonRoutes.js"; 
 
 import morgan from "morgan";
 
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use('/api', spinRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/tryon", tryonRoutes);
 
 // MongoDB connection
 connectDB();

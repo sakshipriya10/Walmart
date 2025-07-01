@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
+import { useProductData } from "../data/useProductData";
 
 const Products = () => {
-  const [allProducts, setAllProducts] = useState([]);
+  const { allProducts, loading } = useProductData();
   const [filtered, setFiltered] = useState([]);
   const [selected, setSelected] = useState("all");
   const navigate = useNavigate();
@@ -18,69 +19,19 @@ const Products = () => {
   ];
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const [
-          fakeStoreRes,
-          fragrances,
-          skincare,
-          dresses,
-          tops,
-          shoes,
-        ] = await Promise.all([
-          axios.get("https://fakestoreapi.com/products"),
-          axios.get("https://dummyjson.com/products/category/fragrances"),
-          axios.get("https://dummyjson.com/products/category/skincare"),
-          axios.get("https://dummyjson.com/products/category/womens-dresses"),
-          axios.get("https://dummyjson.com/products/category/tops"),
-          axios.get("https://dummyjson.com/products/category/womens-shoes"),
-        ]);
-
-        // Filter FakeStore relevant items
-        const fakeStoreProducts = fakeStoreRes.data.filter((p) =>
-          ["men's clothing", "women's clothing", "jewelery"].includes(p.category)
-        );
-
-        // Convert DummyJSON products
-        const dummyProducts = [
-          ...fragrances.data.products,
-          ...skincare.data.products,
-          ...dresses.data.products,
-          ...tops.data.products,
-          ...shoes.data.products,
-        ].map((item) => ({
-          id: `dummy-${item.id}`,
-          title: item.title,
-          price: item.price,
-          category: ["womens-dresses", "tops", "womens-shoes"].includes(item.category)
-            ? "women's clothing"
-            : "makeup",
-          image: item.thumbnail,
-          description: item.description,
-        }));
-
-        const combined = [...fakeStoreProducts, ...dummyProducts];
-
-        setAllProducts(combined);
-        setFiltered(combined);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+    setFiltered(allProducts);
+  }, [allProducts]);
 
   const handleFilter = (category) => {
     setSelected(category);
     if (category === "all") {
       setFiltered(allProducts);
     } else {
-      const filteredList = allProducts.filter((p) => p.category === category);
-      setFiltered(filteredList);
+      setFiltered(allProducts.filter((p) => p.category === category));
     }
   };
 
+  if (loading) return <p className="text-center mt-8">Loading products...</p>;
   return (
     <div className="p-6 bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA] min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
