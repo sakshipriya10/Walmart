@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FDE2E4] to-[#E2ECE9] text-gray-800 p-10">
+    <div className="min-h-screen bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100 text-gray-900 p-10">
       <div className="max-w-full">
         {/* Header */}
         <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center text-[#7C6A9C]">
-          About UrbanEdgeMART
+          About UrbanEDGE MART
         </h1>
         <p className="text-center text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10">
           Your one-stop destination for the latest in fashion, beauty, and lifestyle.
@@ -84,7 +84,7 @@ const About = () => {
 
         {/* Footer CTA */}
         <div className="text-center mt-16">
-          <h3 className="text-2xl font-semibold text-[#7C6A9C] mb-2">Join the UrbanEdgeMART Family!</h3>
+          <h3 className="text-2xl font-semibold text-[#7C6A9C] mb-2">Join the UrbanEDGE MART Family!</h3>
           <p className="text-gray-700 mb-6">
             Experience a new way of shopping that's fun, fashionable, and futuristic.
           </p>

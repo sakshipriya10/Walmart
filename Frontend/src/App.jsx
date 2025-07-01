@@ -15,6 +15,7 @@ import Products from "./Pages/Products";
 import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import AssistantPage from "./assistant/AssistantPage.jsx";
+import WishlistPage from "./Pages/WishlistPage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function AppWrapper() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="*" element={<Navigate to="/Home" />} />
+          <Route path="/wishlist" element={<WishlistPage />} />
         </Routes>
       </div>
 
