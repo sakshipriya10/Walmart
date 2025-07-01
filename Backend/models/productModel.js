@@ -2,9 +2,19 @@
 
 const productSchema = new mongoose.Schema(
   {
-    category: { type: String, required: true },
-    color: { type: String, required: true },
-    price: { type: Number, required: true },
+    /* 🔑 Core */
+    name:        { type: String, required: true },
+    image:       { type: String, required: true },      // URL to main product image
+    price:       { type: Number, required: true },
+
+    /* 🏷️  Catalog info */
+    category:    { type: String, required: true },
+    color:       { type: String, required: true },
+
+    /* 📦  Inventory & metadata (optional but handy) */
+    brand:       { type: String },
+    countInStock:{ type: Number, default: 0 },
+    description: { type: String },
   },
   { timestamps: true }
 );

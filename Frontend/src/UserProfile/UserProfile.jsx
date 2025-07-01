@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const UserProfile = () => {
   const [userData, setUserData] = useState(null);
@@ -16,15 +16,12 @@ const UserProfile = () => {
       }
       try {
         const res = await axios.get("http://localhost:5000/api/user/userDetails", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(res.data);
 
-        // Fetch addresses for this user
         const user = JSON.parse(localStorage.getItem("user"));
-        if (user && user.id) {
+        if (user?.id) {
           const addrRes = await axios.get(`http://localhost:5000/api/address/user/${user.id}`);
           setAddresses(addrRes.data);
         }
@@ -37,7 +34,6 @@ const UserProfile = () => {
     fetchUserProfile();
   }, [navigate]);
 
-  // Delete address handler
   const handleDeleteAddress = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/api/address/${id}`);
@@ -47,83 +43,77 @@ const UserProfile = () => {
     }
   };
 
-  if (!userData) return <div>Loading user data...</div>;
+  if (!userData) return <div className="text-center mt-10">Loading user data...</div>;
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-br from-[#F8BBD0] to-[#E1BEE7] flex flex-col justify-center items-center p-6">
-      <div className="min-h-screen flex items-center justify-center bg-pink-100">
-        <div className="w-[420px] bg-white/90 rounded-3xl shadow-2xl p-10 flex flex-col items-center border border-pink-100">
-          <h2 className="text-3xl font-extrabold text-pink-500 mb-6 tracking-wide text-center">
-            {userData.fullName}
-          </h2>
-          <div className="w-full flex flex-col gap-2">
-            <div className="flex">
-              <span className="w-12 font-semibold text-gray-700">Email:</span>
-              <span className="text-gray-600">{userData.email}</span>
-            </div>
-            <div className="flex">
-              <span className="w-14 font-semibold text-gray-700">Phone:</span>
-              <span className="text-gray-600">{userData.phone || "N/A"}</span>
-            </div>
-            <div className="flex">
-              <span className="w-16 font-semibold text-gray-700">Gender:</span>
-              <span className="text-gray-600">{userData.gender || "N/A"}</span>
-            </div>
-            <div className="flex">
-              <span className="w-19 font-semibold text-gray-700">Interests:</span>
-              <span className="text-gray-600">{userData.interests?.join(", ") || "N/A"}</span>
-            </div>
-            <div className="flex items-start">
-              <span className="w-23 font-semibold text-gray-700">Address:</span>
-              <span className="text-gray-600 flex-1">
-                {addresses.length === 0
-                  ? "N/A"
-                  : addresses.map((addr, idx) => (
-                      <span key={addr._id}>
+    <div className="h-screen w-screen bg-gradient-to-br from-pink-200 via-purple-100 to-pink-300 flex items-center justify-center p-4">
+      {/* Glowy Gradient Border + Shadow */}
+      <div className="p-[3px] rounded-xl bg-gradient-to-tr from-pink-500 via-purple-400 to-pink-500 shadow-[0_0_25px_rgba(238,72,153,0.6)]">
+        <div className="bg-white rounded-xl p-8 w-full max-w-lg sm:w-[90%] md:w-[500px]">
+          <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">{userData.fullName}</h1>
+
+          <div className="space-y-3 text-sm text-gray-700">
+            <p><strong>Email:</strong> {userData.email}</p>
+            <p><strong>Phone:</strong> {userData.phone || "N/A"}</p>
+            <p><strong>Gender:</strong> {userData.gender || "N/A"}</p>
+            <p><strong>Interests:</strong> {userData.interests?.join(", ") || "N/A"}</p>
+            <div>
+              <strong>Address:</strong>
+              {addresses.length === 0 ? (
+                <span className="ml-2">N/A</span>
+              ) : (
+                <ul className="mt-1 list-disc list-inside space-y-1">
+                  {addresses.map((addr) => (
+                    <li key={addr._id} className="flex justify-between items-start text-xs">
+                      <span>
                         {`${addr.name}, ${addr.street}, ${addr.city}, ${addr.state}, ${addr.pincode}, ${addr.country}, ${addr.phone}`}
-                        <button
-                          onClick={() => handleDeleteAddress(addr._id)}
-                          style={{
-                            color: "red",
-                            marginLeft: "8px",
-                            cursor: "pointer",
-                            border: "none",
-                            background: "none",
-                          }}
-                          title="Delete Address"
-                        >
-                          🗑️
-                        </button>
-                        {idx !== addresses.length - 1 && " | "}
                       </span>
-                    ))}
-              </span>
+                      <button
+                        className="ml-2 text-red-500 hover:text-red-700"
+                        onClick={() => handleDeleteAddress(addr._id)}
+                        title="Delete address"
+                      >
+                        🗑️
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-6 w-full">
-            <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">
-              Wishlist
-            </button>
-            <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">
+          {/* Buttons */}
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <Link
+              to="/wishlist"
+              className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg text-center text-sm"
+            >
+              ❤️ Wishlist
+            </Link>
+            <button
+              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
+              onClick={() => navigate("/edit-profile")}
+            >
               Edit Profile
             </button>
             <button
-              className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition"
               onClick={() => {
                 localStorage.removeItem("token");
                 navigate("/Home");
               }}
+              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
             >
               Logout
             </button>
             <button
-              className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition"
+              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
               onClick={() => navigate("/address")}
             >
               Address
             </button>
-            <button className="bg-blue-200 text-blue-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-blue-300 transition">
+            <button
+              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm col-span-2 sm:col-span-1"
+            >
               Orders
             </button>
           </div>

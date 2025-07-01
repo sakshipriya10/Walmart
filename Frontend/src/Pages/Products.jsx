@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
-import { useProductData } from "../data/useProductData";
 
 const Products = () => {
-  const { allProducts, loading } = useProductData();
+  const [allProducts, setAllProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [selected, setSelected] = useState("all");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const categories = [
@@ -16,11 +16,25 @@ const Products = () => {
     { label: "Women's Fashion", value: "women's clothing" },
     { label: "Accessories", value: "jewelery" },
     { label: "Makeup", value: "makeup" },
+    { label: "Jackets", value: "jackets" },
+    { label: "Shoes", value: "shoes" },
   ];
 
   useEffect(() => {
-    setFiltered(allProducts);
-  }, [allProducts]);
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/products");
+        setAllProducts(res.data);
+        setFiltered(res.data);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleFilter = (category) => {
     setSelected(category);
@@ -32,6 +46,7 @@ const Products = () => {
   };
 
   if (loading) return <p className="text-center mt-8">Loading products...</p>;
+
   return (
     <div className="p-6 bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA] min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
@@ -58,7 +73,10 @@ const Products = () => {
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filtered.map((product) => (
-          <div key={product.id} onClick={() => navigate(`/product/${product.id}`)}>
+          <div
+            key={product._id}
+            onClick={() => navigate(`/product/${product._id}`)}
+          >
             <ProductCard product={product} />
           </div>
         ))}

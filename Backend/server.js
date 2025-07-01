@@ -6,6 +6,8 @@ import authRoutes from "./routes/authRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import tryonRoutes from "./routes/tryonRoutes.js"; 
+import wishlistRoutes from "./routes/wishlistRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 import morgan from "morgan";
 
@@ -40,6 +42,8 @@ app.use("/api/contact", contactRoutes);
 app.use('/api', spinRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/tryon", tryonRoutes);
+app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/products", productRoutes);
 
 // MongoDB connection
 connectDB();
