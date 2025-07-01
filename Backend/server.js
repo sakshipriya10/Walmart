@@ -10,6 +10,8 @@ import morgan from "morgan";
 
 import spinRoutes from './routes/spinRoutes.js';
 
+import addressRoutes from "./routes/addressRoutes.js";
+
 dotenv.config();
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(cors({
 app.use(express.json());
 
 app.use(morgan("dev"));
+
+app.use("/api/address", addressRoutes);
 
 
 // app.use(cors({
