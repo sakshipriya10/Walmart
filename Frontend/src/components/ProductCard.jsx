@@ -1,6 +1,18 @@
  import React from "react";
 import axios from "axios";
 
+import { recordPurchase } from "../api/purchaseApi"; // adjust the path if needed
+
+const handleBuy = async () => {
+  // Assuming you have user info and category from props/context
+  await recordPurchase(user._id, product.category);
+
+  // You can optionally show toast or update UI
+  toast.success("Purchase recorded!");
+};
+
+
+
 const ProductCard = ({ product }) => {
   const handleAddToWishlist = async () => {
     const token = localStorage.getItem("token");

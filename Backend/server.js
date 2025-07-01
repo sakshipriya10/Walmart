@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 import tryonRoutes from "./routes/tryonRoutes.js"; 
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js"
 
 import morgan from "morgan";
 
@@ -30,6 +31,7 @@ app.use(morgan("dev"));
 app.use("/api/address", addressRoutes);
 
 
+
 // app.use(cors({
 //   origin: 'http://localhost:5173',  //  Vite runs on this
 //   credentials: true
@@ -44,6 +46,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/tryon", tryonRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/order", orderRoutes);
 
 // MongoDB connection
 connectDB();
