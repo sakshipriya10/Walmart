@@ -37,41 +37,51 @@ const WishlistPage = () => {
       .then(() => navigate("/cart"));             // optional redirect
 
   return (
-    <div className="min-h-screen px-6 py-12 bg-gray-50">
-      <h1 className="text-4xl font-semibold text-center text-gray-800 mb-8">
-        <Heart /> My Wishlist
-      </h1>
+  <div className="w-screen min-h-screen px-6 py-12 bg-[#FFEEEE]">
+    <h1 className="text-4xl font-semibold text-center text-gray-800 mb-8">
+      <Heart /> My Wishlist
+    </h1>
 
-      {items.length === 0 ? (
-        <p className="text-center text-gray-500">Your wishlist is empty.</p>
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {items.map(({ _id, name, price, image }) => (
-            <div key={_id} className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition">
-              <img src={image} alt={name} className="w-32 h-32 object-cover rounded-lg mb-4" />
-              <h2 className="text-lg font-medium text-gray-800 text-center line-clamp-2">{name}</h2>
-              <p className="text-pink-600 font-semibold mt-1">₹{price}</p>
+    {items.length === 0 ? (
+      <p className="text-center text-gray-500">Your wishlist is empty.</p>
+    ) : (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {items.map(({ _id, name, price, image }) => (
+          <div
+            key={_id}
+            className="bg-white rounded-2xl shadow p-4 flex flex-col items-center hover:shadow-lg transition"
+          >
+            <img
+              src={image}
+              alt={name}
+              className="w-32 h-32 object-cover rounded-lg mb-4"
+            />
+            <h2 className="text-lg font-medium text-gray-800 text-center line-clamp-2">
+              {name}
+            </h2>
+            <p className="text-pink-600 font-semibold mt-1">₹{price}</p>
 
-              <div className="mt-4 flex gap-3">
-                <button
-                  onClick={() => moveToCart(_id)}
-                  className="flex items-center bg-blue-600 text-white text-sm px-3 py-1 rounded-lg hover:bg-blue-700"
-                >
-                  <Cart /> Add&nbsp;to&nbsp;Cart
-                </button>
-                <button
-                  onClick={() => removeItem(_id)}
-                  className="flex items-center bg-red-600 text-white text-sm px-3 py-1 rounded-lg hover:bg-red-700"
-                >
-                  <Trash /> Remove
-                </button>
-              </div>
+            <div className="mt-4 flex gap-3">
+              <button
+                onClick={() => moveToCart(_id)}
+                className="flex items-center bg-[#f9c8d9] text-black text-sm px-3 py-1 rounded-lg hover:bg-[#f7b4cd]"
+              >
+                <Cart /> Add&nbsp;to&nbsp;Cart
+              </button>
+              <button
+                onClick={() => removeItem(_id)}
+                className="flex items-center bg-[#f9c8d9] text-black text-sm px-3 py-1 rounded-lg hover:bg-[#f7b4cd]"
+              >
+                <Trash /> Remove
+              </button>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default WishlistPage;

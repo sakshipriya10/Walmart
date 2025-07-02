@@ -1,7 +1,6 @@
-  import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProductCard from "../components/ProductCard";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -80,30 +79,41 @@ const Products = () => {
       )}
 
       {/* Filter Buttons */}
-      <div className="flex flex-wrap gap-4 justify-center mb-6">
-        {categories.map((cat) => (
-          <button
-            key={cat.value}
-            className={`px-4 py-2 rounded-full border ${
-              selected === cat.value
-                ? "bg-pink-500 text-white"
-                : "bg-white text-pink-600"
-            } shadow transition`}
-            onClick={() => handleFilter(cat.value)}
-          >
-            {cat.label}
-          </button>
-        ))}
-      </div>
+     <div className="flex flex-wrap gap-4 justify-center mb-6">
+  {categories.map((cat) => (
+    <button
+      key={cat.value}
+      className={`px-4 py-2 rounded-full border ${
+        selected === cat.value
+          ? "bg-pink-500 text-white"
+          : "bg-white text-pink-600"
+      } shadow transition`}
+      onClick={() => handleFilter(cat.value)}
+    >
+      {cat.label}
+    </button>
+  ))}
+</div>
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filtered.map((product) => (
           <div
             key={product._id}
-            onClick={() => navigate(`/product/${product._id}`)}
+            onClick={() => navigate(`/products/${product._id}`)}
+            className="cursor-pointer bg-white rounded-xl p-4 shadow hover:shadow-lg transition"
           >
-            <ProductCard product={product} />
+            <img
+              src={product.image || product.thumbnail}
+              alt={product.title}
+              className="h-48 w-full object-contain mb-4 rounded"
+            />
+            <h2 className="text-lg font-semibold text-gray-800 mb-1">
+              {product.title}
+            </h2>
+            <p className="text-pink-600 font-bold text-md">
+              ₹{Math.round(product.price * 85)}
+            </p>
           </div>
         ))}
       </div>

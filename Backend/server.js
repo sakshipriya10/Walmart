@@ -10,6 +10,8 @@ import wishlistRoutes from "./routes/wishlistRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js"
 import challengeRoutes from "./routes/challengeRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 import morgan from "morgan";
 
@@ -50,6 +52,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/challenges", challengeRoutes);
 
+app.use("/api/cart", cartRoutes);
 
 // MongoDB connection
 connectDB();

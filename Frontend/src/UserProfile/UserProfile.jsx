@@ -84,39 +84,57 @@ const UserProfile = () => {
 
           {/* Buttons */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <Link
-              to="/wishlist"
-              className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg text-center text-sm"
-            >
-              ❤️ Wishlist
-            </Link>
-            <button
-              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
-              onClick={() => navigate("/edit-profile")}
-            >
-              Edit Profile
-            </button>
-            <button
-              onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/Home");
-              }}
-              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
-            >
-              Logout
-            </button>
-            <button
-              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
-              onClick={() => navigate("/address")}
-            >
-              Address
-            </button>
-            <button
-              className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm col-span-2 sm:col-span-1"
-            >
-              Orders
-            </button>
-          </div>
+  {/* Wishlist Button */}
+  <Link
+    to="/wishlist"
+    className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg text-center text-sm"
+  >
+    ❤️ Wishlist
+  </Link>
+
+  {/* Cart Button */}
+  <Link
+    to="/cart"
+    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center text-sm"
+  >
+    🛒 Cart
+  </Link>
+
+  {/* Edit Profile */}
+  <button
+    className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
+    onClick={() => navigate("/edit-profile")}
+  >
+    Edit Profile
+  </button>
+
+  {/* Logout */}
+  <button
+    onClick={() => {
+      localStorage.removeItem("token");
+      navigate("/Home");
+    }}
+    className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
+  >
+    Logout
+  </button>
+
+  {/* Address */}
+  <button
+    className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
+    onClick={() => navigate("/address")}
+  >
+    Address
+  </button>
+
+  {/* Orders */}
+  <button
+    className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm col-span-2 sm:col-span-1"
+  >
+    Orders
+  </button>
+</div>
+
         </div>
       </div>
     </div>

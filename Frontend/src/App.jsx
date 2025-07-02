@@ -1,5 +1,8 @@
  import React from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 import SignUp from "./register/SignUp.jsx";
 import Login from "./Login/Login.jsx";
@@ -16,7 +19,6 @@ import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import AssistantPage from "./assistant/AssistantPage.jsx";
 import WishlistPage from "./Pages/WishlistPage";
-import Checkout from "./Pages/Checkout";
 
 function AppWrapper() {
   const location = useLocation();
@@ -44,7 +46,6 @@ function AppWrapper() {
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="*" element={<Navigate to="/Home" />} />
           <Route path="/wishlist" element={<WishlistPage />} />
-          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
 
@@ -60,6 +61,7 @@ function App() {
   return (
     <BrowserRouter>
       <AppWrapper />
+      <ToastContainer position="top-center" autoClose={2000} />
     </BrowserRouter>
   );
 }
