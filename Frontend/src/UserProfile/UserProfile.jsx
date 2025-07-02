@@ -87,7 +87,7 @@ const UserProfile = () => {
   {/* Wishlist Button */}
   <Link
     to="/wishlist"
-    className="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg text-center text-sm"
+    className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
   >
     ❤️ Wishlist
   </Link>
@@ -95,7 +95,7 @@ const UserProfile = () => {
   {/* Cart Button */}
   <Link
     to="/cart"
-    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-center text-sm"
+    className="bg-blue-200 hover:bg-blue-300 text-blue-900 font-semibold px-4 py-2 rounded-lg text-sm"
   >
     🛒 Cart
   </Link>
