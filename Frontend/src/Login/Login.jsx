@@ -89,9 +89,9 @@ const handleLogin = async (e) => {
                 <input type="checkbox" className="mr-2" />
                 Remember me
               </label>
-              <a href="#" className="text-pink-600 hover:underline">
+              <Link to="/forgot-password" className="text-pink-600 hover:underline">
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
             <button
@@ -105,7 +105,9 @@ const handleLogin = async (e) => {
             <div className="text-center my-4 text-sm text-[#999]">OR New User ?</div>
 
 <div className="text-center mt-4">
-<Link to="/" className="text-blue-600">Sign up</Link>
+<Link to="/SignUp" className="text-blue-600 hover:underline">
+ Sign up
+</Link>
 
 </div>
 

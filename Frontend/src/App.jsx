@@ -16,6 +16,8 @@ import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import AssistantPage from "./assistant/AssistantPage.jsx";
 import WishlistPage from "./Pages/WishlistPage";
+import ForgotPassword from "./UserProfile/ForgotPassword.jsx";
+import ResetPassword from "./UserProfile/ResetPassword";
 
 function AppWrapper() {
   const location = useLocation();
@@ -42,6 +44,8 @@ function AppWrapper() {
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="*" element={<Navigate to="/Home" />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </div>
 

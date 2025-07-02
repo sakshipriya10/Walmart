@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   interests: [String],
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 
   // Wishlist and cart
   wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
