@@ -1,14 +1,17 @@
- import React, { useEffect, useState } from "react";
+  import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Products = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [selected, setSelected] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [challengeMessage, setChallengeMessage] = useState("");
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const categories = [
     { label: "All", value: "all" },
@@ -20,6 +23,18 @@ const Products = () => {
     { label: "Shoes", value: "shoes" },
   ];
 
+  // 🔍 Check if user came from challenge
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const fromChallenge = queryParams.get("fromChallenge");
+
+    if (fromChallenge === "category") {
+      setChallengeMessage("🎯 You're here to complete your Category Challenge!");
+      setSelected("all"); // You can change this default
+    }
+  }, [location.search]);
+
+  // 🌐 Fetch products from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -36,22 +51,33 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const handleFilter = (category) => {
-    setSelected(category);
-    if (category === "all") {
+  // 🔄 Filter when selected category changes
+  useEffect(() => {
+    if (selected === "all") {
       setFiltered(allProducts);
     } else {
-      setFiltered(allProducts.filter((p) => p.category === category));
+      setFiltered(allProducts.filter((p) => p.category === selected));
     }
+  }, [selected, allProducts]);
+
+  const handleFilter = (category) => {
+    setSelected(category);
   };
 
   if (loading) return <p className="text-center mt-8">Loading products...</p>;
 
   return (
     <div className="p-6 bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA] min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+      <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
         UrbanEdgeMART Collection
       </h1>
+
+      {/* 🎯 Challenge Message */}
+      {challengeMessage && (
+        <div className="text-center text-pink-700 font-medium mb-4 bg-pink-100 p-3 rounded-lg shadow-md">
+          {challengeMessage}
+        </div>
+      )}
 
       {/* Filter Buttons */}
       <div className="flex flex-wrap gap-4 justify-center mb-6">

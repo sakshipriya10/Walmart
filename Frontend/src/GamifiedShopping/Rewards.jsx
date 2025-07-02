@@ -1,13 +1,35 @@
- export default function Rewards() {
+ import { useEffect, useState } from "react";
+import axios from "axios";
+
+const Rewards = ({ userId }) => {
+  const [points, setPoints] = useState(0);
+
+  useEffect(() => {
+    const fetchPoints = async () => {
+      try {
+        const res = await axios.post("http://localhost:5000/api/challenges/get", { userId });
+        setPoints(res.data.pointsEarned || 0);
+      } catch (err) {
+        console.error("Error fetching reward points:", err);
+      }
+    };
+
+    fetchPoints();
+  }, [userId]);
+
   return (
-    <div className="bg-white p-3 rounded-xl shadow-md">
-      <h2 className="font-semibold text-xl mb-2">Rewards System</h2>
-      <div className="bg-gray-200 rounded-full h-4 w-full mb-2">
-        <div className="bg-purple-400 h-4 rounded-full w-[70%]"></div>
+    <div className="bg-white p-4 rounded-xl shadow-md">
+      <h2 className="text-lg font-bold text-black mb-2">Rewards System</h2>
+      <div className="w-full h-3 bg-gray-200 rounded-full mb-2">
+        <div
+          className="h-full bg-purple-500 rounded-full transition-all duration-300"
+          style={{ width: `${Math.min((points / 1000) * 100, 100)}%` }}
+        />
       </div>
-      <p className="text-lg font-bold">850 POINTS</p>
+      <p className="text-2xl font-bold text-purple-700">{points} POINTS</p>
       <p className="text-sm text-gray-600">Earn points for purchases, reviews, and more</p>
-      <button className="mt-3 px-4 py-2 bg-gray-200 rounded hover:scale-[1.02] hover:shadow-md">Rewards Store</button>
     </div>
   );
-}
+};
+
+export default Rewards;

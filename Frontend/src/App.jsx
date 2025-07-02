@@ -16,6 +16,7 @@ import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import AssistantPage from "./assistant/AssistantPage.jsx";
 import WishlistPage from "./Pages/WishlistPage";
+import Checkout from "./Pages/Checkout";
 
 function AppWrapper() {
   const location = useLocation();
@@ -29,7 +30,8 @@ function AppWrapper() {
           <Route path="/Home" element={<Home />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/ShoppingPage" element={<ShoppingPage />} />
+         <Route path="/shoppingpage" element={<ShoppingPage />} />
+
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/TryOnPage" element={<TryOnPage />} />
           <Route path="/About" element={<About />} />
@@ -42,6 +44,7 @@ function AppWrapper() {
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="*" element={<Navigate to="/Home" />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </div>
 
