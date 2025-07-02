@@ -8,7 +8,8 @@ import userRoutes from "./routes/userRoutes.js";
 import tryonRoutes from "./routes/tryonRoutes.js"; 
 import wishlistRoutes from "./routes/wishlistRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js"
+import orderRoutes from "./routes/orderRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 
 import morgan from "morgan";
 
@@ -47,6 +48,7 @@ app.use("/api/tryon", tryonRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/api/cart", cartRoutes);
 
 // MongoDB connection
 connectDB();

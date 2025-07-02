@@ -1,8 +1,17 @@
-import React from "react";
-import { useCart } from "../context/CartContext";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Cart = () => {
-  const { cart } = useCart();
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/cart", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then((res) => setCart(res.data))
+      .catch((err) => console.error(err));
+  }, []);
 
   const total = cart.reduce((sum, item) => sum + item.price, 0);
 
@@ -16,10 +25,10 @@ const Cart = () => {
         <>
           <ul className="space-y-4">
             {cart.map((item) => (
-              <li key={item.id} className="bg-white p-4 rounded-xl shadow-md flex gap-4 items-center">
-                <img src={item.image || item.thumbnail} className="h-16 w-16 object-contain" />
+              <li key={item._id} className="bg-white p-4 rounded-xl shadow-md flex gap-4 items-center">
+                <img src={item.image} className="h-16 w-16 object-contain" />
                 <div>
-                  <h3 className="font-semibold">{item.title}</h3>
+                  <h3 className="font-semibold">{item.name}</h3>
                   <p className="text-pink-600 font-bold">₹{item.price}</p>
                 </div>
               </li>
