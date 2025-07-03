@@ -4,11 +4,23 @@ import bgImage from "../assets/heroBg.jpg";
 import AssistantComponent from "../assistant/AssistantPage";
 import ObjectDetection from "../components/ObjectDetection";
 import ARViewer from "../components/ARViewer";
+import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ for page navigation
+
 
 export default function Hero() {
   const [showAssistant, setShowAssistant] = useState(false);
   const [showDetection, setShowDetection] = useState(false);
   const [showAR, setShowAR] = useState(false);
+  const scrollRef = useRef(null);
+  const navigate = useNavigate(); // ✅ Add this line
+  const bottomRef = useRef(null);
+
+const handleScrollToBottom = () => {
+  bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+};
+
+
 
   return (
     <section className="w-screen overflow-x-hidden">
@@ -31,9 +43,13 @@ export default function Hero() {
             Discover the latest trends in clothing and accessories. Curated styles and essentials to elevate your wardrobe for every season.
           </p>
 
-          <button className="relative px-3 py-2 font-semibold text-white text-sm bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-500 rounded-3xl shadow-3xl ring-1 ring-cyan-600 hover:ring-1 hover:shadow-cyan-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300">
-            Explore More
-          </button>
+       <button
+         className="relative px-3 py-2 font-semibold text-white text-sm bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-500 rounded-3xl shadow-3xl ring-1 ring-cyan-600 hover:ring-1 hover:shadow-cyan-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300"
+         onClick={handleScrollToBottom}
+       >
+         Explore More
+       </button>
+
         </div>
       </div>
 
@@ -102,6 +118,7 @@ export default function Hero() {
               Close Detection
             </button>
           </div>
+          
         )}
       </div>
     </div>
@@ -109,6 +126,7 @@ export default function Hero() {
 </div>
 </div>
 
+<div ref={bottomRef}></div>
 
     </section>
   );
