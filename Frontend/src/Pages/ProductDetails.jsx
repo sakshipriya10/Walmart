@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaHeart } from "react-icons/fa"; // ⬅️ Import heart icon
+import { FaHeart } from "react-icons/fa"; // 
 import { toast } from "react-toastify";
+import ShareRewardCard from "../components/ShareRewardCard";
+
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user")); 
+
 
   useEffect(() => {
   const fetchProduct = async () => {
@@ -103,6 +107,10 @@ const handleAddToCart = async () => {
           </button>
         </div>
       </div>
+        <div className="mt-6">
+          <ShareRewardCard userId={user?._id} productId={product?._id} />
+        </div>
+
     </div>
   );
 };
