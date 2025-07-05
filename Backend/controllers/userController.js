@@ -36,3 +36,30 @@ export const getUserDetails = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+export const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user._id; // Coming from auth middleware
+    const { fullName, email, phone, gender, interests } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        fullName,
+        email,
+        phone,
+        gender,
+        interests, // should be an array
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error("Error updating user profile", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
