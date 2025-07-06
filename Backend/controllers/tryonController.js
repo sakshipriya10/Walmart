@@ -15,18 +15,21 @@ export const tryCloth = async (req, res) => {
     const scriptPath = path.join(__dirname, "../../ML/overlay_cloth.py");
 
     exec(
-      `python ${scriptPath} ${userImgPath} ${clothImgPath} ${outputPath}`,
-      (err) => {
-        if (err) {
-          console.error(err);
-          return res
-            .status(500)
-            .json({ message: "Overlay failed", error: err });
-        }
+  `python ${scriptPath} ${userImgPath} ${clothImgPath} ${outputPath}`,
+  (err, stdout, stderr) => {
+    if (err) {
+      console.error("❌ Overlay failed");
+      console.error("stderr:", stderr);  // <-- show Python errors
+      console.error("stdout:", stdout);
+      return res
+        .status(500)
+        .json({ message: "Overlay failed", error: err, stderr });
+    }
 
-        res.sendFile(path.resolve(outputPath));
-      }
-    );
+    res.sendFile(path.resolve(outputPath));
+  }
+);
+
   } catch (err) {
     res
       .status(500)
