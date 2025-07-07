@@ -39,6 +39,10 @@ export default function Navbar() {
       <li className="hover:text-pink-400 cursor-pointer transition">About</li>
     </Link>
 
+    <Link to="/products">
+      <li className="hover:text-pink-400 cursor-pointer transition">Shop Now</li>
+    </Link>
+
     <li ref={domNode} className="relative">
       <button
         onClick={() => setDropdownOpen(!dropdownOpen)}
@@ -50,7 +54,6 @@ export default function Navbar() {
         <div className="absolute top-full mt-2 w-48 rounded-md bg-white shadow-lg z-50">
           <a href="/TryOnPage" className="block px-4 py-2 hover:bg-pink-100 text-sm">Virtual Try-On</a>
           <a href="/ShoppingPage" className="block px-4 py-2 hover:bg-pink-100 text-sm">Gamified Shopping</a>
-          <a href="/products" className="block px-4 py-2 hover:bg-pink-100 text-sm">Shop Now</a>
         </div>
       )}
     </li>
@@ -79,7 +82,6 @@ export default function Navbar() {
     </Link>
   </div>
 </nav>
-
 
   );
 }
