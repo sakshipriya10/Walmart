@@ -15,6 +15,7 @@ const productSchema = new mongoose.Schema(
     brand:       { type: String },
     countInStock:{ type: Number, default: 0 },
     description: { type: String },
+     views:       { type: Number, default: 0 },
   },
   { timestamps: true }
 );

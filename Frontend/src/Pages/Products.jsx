@@ -36,20 +36,29 @@ const Products = () => {
 
   // 🌐 Fetch products from backend
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/products");
+  let ignore = false;
+
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/products");
+      if (!ignore) {
         setAllProducts(res.data);
         setFiltered(res.data);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    } finally {
+      if (!ignore) setLoading(false);
+    }
+  };
 
-    fetchProducts();
-  }, []);
+  fetchProducts();
+
+  return () => {
+    ignore = true; // prevents second call in dev mode
+  };
+}, []);
+
 
   // 🔄 Filter when selected category changes
   useEffect(() => {
