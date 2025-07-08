@@ -14,18 +14,25 @@ const ProductDetails = () => {
 
 
   useEffect(() => {
+  let ignore = false;
+
   const fetchProduct = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-      setProduct(res.data);
+      const res = await axios.get(`http://localhost:5000/api/products/${id}?increment=true`);
+      if (!ignore) setProduct(res.data);
     } catch (err) {
       console.error("Error loading product:", err);
-      setProduct(null);
+      if (!ignore) setProduct(null);
     }
   };
 
   fetchProduct();
+
+  return () => {
+    ignore = true;
+  };
 }, [id]);
+
 if (!product)
     return <p className="p-6 text-center text-gray-600">Product not found or failed to load.</p>;
 const handleAddToWishlist = async () => {
