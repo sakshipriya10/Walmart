@@ -1,10 +1,11 @@
- import React, { useState } from "react";
-import ResultList from "./ResultList";
+ // ✅ AssistantInput.jsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AssistantInput = () => {
   const [message, setMessage] = useState("");
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     if (!message.trim()) return;
@@ -20,7 +21,12 @@ const AssistantInput = () => {
       });
 
       const data = await res.json();
-      setProducts(data.products || []);
+      const foundProducts = data.products || [];
+
+      // ✅ Navigate to Products page with filtered result
+      navigate("/products", {
+        state: { fromAssistant: true, assistantProducts: foundProducts },
+      });
     } catch (error) {
       console.error("❌ Error fetching assistant results:", error);
     }
@@ -45,10 +51,9 @@ const AssistantInput = () => {
           {loading ? "Searching..." : "Ask"}
         </button>
       </div>
-
-      <ResultList products={products} />
     </div>
   );
 };
 
 export default AssistantInput;
+
