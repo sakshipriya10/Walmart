@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import image1 from "../assets/image1.png";
 import  { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const Login = () => {
@@ -11,27 +11,37 @@ const Login = () => {
 const [emailInput, setEmailInput] = useState("");
 const [passwordInput, setPasswordInput] = useState("");
 const navigate = useNavigate();
+const location = useLocation();
+const from = location.state?.from?.pathname || "/Home";
 
 const handleLogin = async (e) => {
   e.preventDefault(); // prevent page reload
+
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/login", {
-      email: emailInput,
-      password: passwordInput,
-    },{ withCredentials: true }); // include credentials for cookie handling
+    const res = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      {
+        email: emailInput,
+        password: passwordInput,
+      },
+      { withCredentials: true }
+    );
+
     console.log("Login Success", res.data);
     alert("Login Successful");
-     navigate("/Home");
-    // You can also store the token:
+
+    // ✅ Store token and user info
     localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-    // Navigate to dashboard
+    localStorage.setItem("userId", res.data.user._id);  // needed for ProtectedRoute
+
+    // ✅ Redirect back to intended page
+    navigate(from, { replace: true });
+
   } catch (error) {
     console.error("Login failed", error.response?.data?.message || error.message);
     alert("Login failed: " + (error.response?.data?.message || "Something went wrong"));
   }
 };
-
 
   return (
 <div className="w-screen h-screen flex items-center justify-center bg-[#ffe4f0] font-sans">
