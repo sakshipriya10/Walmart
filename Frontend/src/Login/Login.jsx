@@ -121,30 +121,6 @@ const handleLogin = async (e) => {
 
 </div>
 
-
-
-{/* 
-            <div className="text-center my-4 text-sm text-[#999]">OR New User ?</div>
-
-            <button
-              type="submit"
-              className="w-full p-3 rounded-xl bg-gradient-to-r from-blue-400 to-pink-400 text-white font-semibold hover:opacity-90 transition"
-            >
-              Sign Up
-            </button>
-
-            {/* <button
-              type="button"
-              className="w-full p-3 border border-gray-300 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-100 transition"
-            >
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/300/300221.png"
-                alt="Google"
-                className="w-5 h-5"
-              />
-              Sign in with Google
-            </button> */} 
-
             <p className="text-sm text-center mt-6 text-[#777]">
               Don’t have an account yet?{" "}
               <a href="#" className="text-blue-600 hover:underline">

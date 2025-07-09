@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 import SignUp from "./register/SignUp.jsx";
 import Login from "./Login/Login.jsx";

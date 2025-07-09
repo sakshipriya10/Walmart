@@ -4,7 +4,6 @@ import DailySpin from "./DailySpin";
 import Rewards from "./Rewards";
 import Leaderboard from "./Leaderboard";
 import ChallengesQuests from "./ChallengesQuests";
-import ProductBadges from "./ProductBadges";
 import AugmentedReality from "./AugmentedReality";
 import FlashSale from "./FlashSale";
 
@@ -35,10 +34,6 @@ export default function ShoppingPage() {
 
         <div className="rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
           <Rewards userId={userId} />
-        </div>
-
-        <div className="rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
-          <ProductBadges />
         </div>
 
         <div className="rounded-xl shadow p-4 h-full transition-transform hover:scale-105 hover:shadow-xl duration-300 bg-blue-50">
