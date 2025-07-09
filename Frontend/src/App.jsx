@@ -2,7 +2,7 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 import SignUp from "./register/SignUp.jsx";
 import Login from "./Login/Login.jsx";
@@ -36,8 +36,14 @@ function AppWrapper() {
           <Route path="/Home" element={<Home />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
-         <Route path="/shoppingpage" element={<ShoppingPage />} />
-
+          <Route
+    path="/shoppingpage"
+    element={
+      <ProtectedRoute>
+        <ShoppingPage />
+      </ProtectedRoute>
+    }
+  />
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/TryOnPage" element={<TryOnPage />} />
           <Route path="/About" element={<About />} />
