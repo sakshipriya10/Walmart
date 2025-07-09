@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCart();
@@ -66,6 +68,12 @@ const Cart = () => {
             ))}
           </ul>
           <p className="text-xl text-pink-600 font-bold mt-6">Total: ₹{total}</p>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={() => navigate("/select-address")}
+           >
+           Select Delivery Address
+         </button>
         </>
       )}
     </div>

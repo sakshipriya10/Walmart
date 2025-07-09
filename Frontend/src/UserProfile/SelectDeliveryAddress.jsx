@@ -26,7 +26,7 @@ export default function SelectDeliveryAddress() {
       localStorage.setItem("selectedAddressId", selected);
       alert("Delivery address selected!");
       // Redirect to next step (e.g., payment)
-      navigate("/checkout");
+      navigate("/place-order");
     } else {
       alert("Please select an address.");
     }

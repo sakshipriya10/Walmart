@@ -9,6 +9,7 @@ const addressSchema = new mongoose.Schema({
   pincode: String,
   country: String,
   phone: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 export default mongoose.model("Address", addressSchema);
