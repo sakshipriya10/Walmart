@@ -21,6 +21,8 @@ import AssistantPage from "./assistant/AssistantPage.jsx";
 import WishlistPage from "./Pages/WishlistPage";
 import SelectDeliveryAddress from "./UserProfile/SelectDeliveryAddress.jsx";
 import PlaceOrder from "./Pages/placeOrder.jsx";
+import UserOrders from "./UserProfile/userOrders.jsx";
+
 
 function AppWrapper() {
   const location = useLocation();
@@ -50,6 +52,7 @@ function AppWrapper() {
           <Route path="/wishlist" element={<WishlistPage />} />
           <Route path="/select-address" element={<SelectDeliveryAddress />} />
           <Route path="/place-order" element={<PlaceOrder />} />
+          <Route path="/orders" element={<UserOrders />} />
         </Routes>
       </div>
 

@@ -7,48 +7,59 @@ export default function PlaceOrder() {
   const [address, setAddress] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // 1. Load cart from localStorage (or fetch from backend if needed)
-    setCart(JSON.parse(localStorage.getItem("cart")) || []);
-
-    // 2. Load selected address ID from localStorage
-    const addressId = localStorage.getItem("selectedAddressId");
-
-    if (addressId) {
-      axios
-        .get(`http://localhost:5000/api/address/${addressId}`)
-        .then((res) => {
-          setAddress(res.data); // Adjust based on your API's return shape
-        })
-        .catch((err) => {
-          console.error("Error fetching address:", err);
-        });
-    }
-  }, []);
-
-  const handlePlaceOrder = async () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.id || !address || cart.length === 0) {
-      alert("Missing required information");
-      return;
-    }
-
+ useEffect(() => {
+  const fetchData = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/order/place", {
-        userId: user.id,
-        addressId: address._id,
-        items: cart,
-      });
+      const selectedAddressId = localStorage.getItem("selectedAddressId");
+      console.log("Selected Address ID:", selectedAddressId); // Debug log
 
-      console.log("Order placed:", res.data);
-      localStorage.removeItem("cart");
-      localStorage.removeItem("selectedAddressId");
-      navigate("/orders"); // Redirect to order history
+      if (!selectedAddressId) {
+        console.warn("No selected address ID found in localStorage.");
+        return;
+      }
+
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      setCart(cartItems);
+
+      const addrRes = await axios.get(`http://localhost:5000/api/address/${selectedAddressId}`);
+      setAddress(addrRes.data);
     } catch (err) {
-      console.error("Order failed:", err);
-      alert("Order placement failed. Please try again.");
+      console.error("Error loading cart or address:", err);
     }
   };
+
+  fetchData();
+}, []);
+
+
+ const handlePlaceOrder = async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("User:", user.id);
+  console.log("Cart:", cart);
+  console.log("Address:", address);
+
+  if (!user || !user.id || !address || cart.length === 0) {
+    alert("Missing required information");
+    return;
+  }
+
+  try {
+    const res = await axios.post("http://localhost:5000/api/order/place", {
+      userId: user.id,
+      addressId: address._id,
+      items: cart,
+    });
+
+    alert("✅ Order placed successfully!");
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("selectedAddressId");
+    navigate("/orders");
+
+  } catch (err) {
+    console.error("Order failed:", err);
+    alert("Order placement failed. Please try again.");
+  }
+};
 
   return (
     <div className="w-screen min-h-screen flex flex-col items-center bg-[#FFFBFA] py-8 px-4">

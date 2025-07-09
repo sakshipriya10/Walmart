@@ -28,3 +28,17 @@ export const deleteAddress = async (req, res) => {
     res.status(500).json({ message: "Failed to delete address" });
   }
 };
+
+// ✅ Get address by ID
+export const getAddressById = async (req, res) => {
+  try {
+    const address = await Address.findById(req.params.id);
+    if (!address) {
+      return res.status(404).json({ message: "Address not found" });
+    }
+    res.json(address);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+

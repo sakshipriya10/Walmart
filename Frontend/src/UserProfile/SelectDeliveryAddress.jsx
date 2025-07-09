@@ -23,7 +23,8 @@ export default function SelectDeliveryAddress() {
   const handleConfirm = () => {
     if (selected) {
       // Save selected address to localStorage or context, or send to backend
-      localStorage.setItem("selectedAddressId", selected);
+      localStorage.setItem("selectedAddressId", selected._id);
+      console.log("Saved Address ID:", selected._id);
       alert("Delivery address selected!");
       // Redirect to next step (e.g., payment)
       navigate("/place-order");
@@ -63,11 +64,20 @@ export default function SelectDeliveryAddress() {
           </div>
         )}
         <button
-          className="mt-6 w-full bg-pink-200 text-pink-900 px-6 py-2 rounded-xl font-semibold shadow hover:bg-pink-300 transition"
-          onClick={handleConfirm}
-        >
-          Confirm Delivery Address
-        </button>
+  onClick={() => {
+    if (!selected) {
+      alert("Please select an address");
+      return;
+    }
+    localStorage.setItem("selectedAddressId", selected);
+    console.log("Selected address stored:", selected);
+    navigate("/place-order");
+  }}
+  className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded"
+>
+  Confirm Delivery Address
+</button>
+
       </div>
     </div>
   );

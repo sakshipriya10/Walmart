@@ -12,10 +12,13 @@ const Cart = () => {
 
   const fetchCart = () => {
     axios
-      .get("/api/cart", {
+      .get("http://localhost:5000/api/cart", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
-      .then((res) => setCart(res.data))
+      .then((res) => {
+        setCart(res.data);
+      localStorage.setItem("cartItems", JSON.stringify(res.data));
+    })
       .catch((err) => console.error(err));
   };
 

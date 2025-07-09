@@ -1,8 +1,10 @@
 import express from "express";
-import { handlePurchase } from "../controllers/orderController.js";
+import { placeOrder, getUserOrders , cancelOrder } from "../controllers/orderController.js";
 
 const router = express.Router();
 
-router.post("/purchase", handlePurchase);
+router.post("/place", placeOrder);
+router.get("/user/:userId", getUserOrders); // ✅ Add this route to get user orders
+router.patch("/cancel/:id", cancelOrder); // ✅ Add this route to cancel an order
 
 export default router;
