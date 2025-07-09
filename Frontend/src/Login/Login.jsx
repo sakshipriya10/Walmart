@@ -15,7 +15,7 @@ const location = useLocation();
 const from = location.state?.from?.pathname || "/Home";
 
 const handleLogin = async (e) => {
-  e.preventDefault(); // prevent page reload
+  e.preventDefault();
 
   try {
     const res = await axios.post(
@@ -28,15 +28,16 @@ const handleLogin = async (e) => {
     );
 
     console.log("Login Success", res.data);
-    alert("Login Successful");
 
-    // ✅ Store token and user info
+    // ✅ FIX: Store full user object
+    const user = res.data.user;
+    localStorage.setItem("user", JSON.stringify(user)); // must include _id
+    localStorage.setItem("userId", user._id);           // optional
     localStorage.setItem("token", res.data.token);
-    localStorage.setItem("userId", res.data.user._id);  // needed for ProtectedRoute
 
-    // ✅ Redirect back to intended page
+    alert("Login Successful");
     navigate(from, { replace: true });
-
+    window.location.reload(); // ensure user data is available on all pages
   } catch (error) {
     console.error("Login failed", error.response?.data?.message || error.message);
     alert("Login failed: " + (error.response?.data?.message || "Something went wrong"));
