@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-// ✅ Local images (you can rename later if needed)
+// ✅ Local images
 import shirt1 from "../assets/tryon/shirt1.png";
 import shirt2 from "../assets/tryon/shirt2.png";
 import shirt3 from "../assets/tryon/shirt3.png";
@@ -29,16 +29,16 @@ const localTryonClothes = [
 const TryOnPage = () => {
   const [category, setCategory] = useState("clothes");
   const [cameraOn, setCameraOn] = useState(false);
+  const [useUpload, setUseUpload] = useState(false);
   const [selectedCloth, setSelectedCloth] = useState(null);
   const [overlayImage, setOverlayImage] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState(null);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
   const { allProducts, loading } = useProductData();
-
   const makeup = allProducts.filter((p) => p.category === "makeup");
 
-  // 👕 Static local try-on clothes instead of dynamic filter
   const items = category === "clothes" ? localTryonClothes : makeup;
 
   useEffect(() => {
@@ -56,7 +56,6 @@ const TryOnPage = () => {
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
     setCameraOn(false);
-    setOverlayImage(null);
   };
 
   const captureImage = () => {
@@ -69,130 +68,207 @@ const TryOnPage = () => {
   };
 
   const handleTryOn = async () => {
-    if (!selectedCloth || !videoRef.current) return;
+  if (!selectedCloth || (!cameraOn && !uploadedImage)) return;
 
+  let userBlob;
+
+  if (useUpload && uploadedImage) {
+    // uploadedImage is a dataURL (base64) → convert to Blob
+    const response = await fetch(uploadedImage);
+    userBlob = await response.blob();
+  } else {
     const imageDataURL = captureImage();
-    const userBlob = await (await fetch(imageDataURL)).blob();
-    const clothBlob = await (await fetch(selectedCloth.image)).blob();
+    userBlob = await (await fetch(imageDataURL)).blob();
+  }
 
-    const formData = new FormData();
-    formData.append("userImage", userBlob, "user.png");
-    formData.append("itemImage", clothBlob, "cloth.png");
+  let clothBlob;
+  try {
+    const response = await fetch(selectedCloth.image);
+    clothBlob = await response.blob();
+  } catch (err) {
+    console.error("Failed to load cloth image:", err);
+    return;
+  }
 
-    try {
-      const res = await fetch("http://localhost:5000/api/tryon", {
-        method: "POST",
-        body: formData,
-      });
+  const formData = new FormData();
+  formData.append("userImage", userBlob, "user.png");
+  formData.append("itemImage", clothBlob, "cloth.png");
 
-      if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`Server error: ${res.status} - ${errText}`);
-      }
+  try {
+    const res = await fetch("http://localhost:5000/api/tryon", {
+      method: "POST",
+      body: formData,
+    });
 
-      const data = await res.blob();
-      const outputUrl = URL.createObjectURL(data);
-      setOverlayImage(outputUrl);
-    } catch (err) {
-      console.error("Try-on failed:", err);
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(`Server error: ${res.status} - ${errText}`);
     }
-  };
 
-  return (
-    <div className="min-h-screen w-screen overflow-x-hidden bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA]">
-      <div className="max-w-[1440px] mx-auto px-6 py-8">
-        <h1 className="text-4xl font-bold text-[#4A4A4A] text-center mb-6">Virtual Try-On</h1>
+    const data = await res.blob();
+    const outputUrl = URL.createObjectURL(data);
+    setOverlayImage(outputUrl);
+  } catch (err) {
+    console.error("Try-on failed:", err);
+  }
+};
 
-        {/* Category Switch */}
-        <div className="flex justify-center gap-4 mb-6">
-          <button
-            onClick={() => setCategory("clothes")}
-            className={`px-6 py-2 rounded-full text-lg font-medium border ${
-              category === "clothes"
-                ? "bg-[#F8BBD0] text-white border-transparent"
-                : "bg-white text-[#4A4A4A] border-gray-300"
-            }`}
-          >
-            Clothes
-          </button>
-          <button
-            onClick={() => setCategory("makeup")}
-            className={`px-6 py-2 rounded-full text-lg font-medium border ${
-              category === "makeup"
-                ? "bg-[#CE93D8] text-white border-transparent"
-                : "bg-white text-[#4A4A4A] border-gray-300"
-            }`}
-          >
-            Makeup
-          </button>
-        </div>
+const handleReset = () => {
+  setOverlayImage(null);
+  setSelectedCloth(null);
+  setUploadedImage(null);
+};
 
-        {/* Main Layout */}
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Try-On Area */}
-          <div className="flex flex-col items-center justify-center flex-1 bg-[#E6E6FA] rounded-2xl p-6 shadow-lg">
-            <div className="w-full h-full max-h-[500px] bg-[#F3F4F6] rounded-xl flex items-center justify-center overflow-hidden relative">
-              {overlayImage ? (
-                <img src={overlayImage} alt="Result" className="w-full h-full object-contain" />
-              ) : cameraOn ? (
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  playsInline
-                  className="w-full h-full object-cover rounded-xl"
-                />
-              ) : (
-                <span className="text-gray-400">Your image or live feed</span>
-              )}
-            </div>
 
+
+ return (
+  <div className="min-h-screen w-screen overflow-x-hidden bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA]">
+    <div className="max-w-[1440px] mx-auto px-6 py-8">
+      <h1 className="text-4xl font-bold text-[#4A4A4A] text-center mb-6">Virtual Try-On</h1>
+
+      {/* Category Switch */}
+      <div className="flex justify-center gap-4 mb-6">
+        <button
+          onClick={() => setCategory("clothes")}
+          className={`px-6 py-2 rounded-full text-lg font-medium border ${
+            category === "clothes"
+              ? "bg-[#F8BBD0] text-white border-transparent"
+              : "bg-white text-[#4A4A4A] border-gray-300"
+          }`}
+        >
+          Clothes
+        </button>
+        <button
+          onClick={() => setCategory("makeup")}
+          className={`px-6 py-2 rounded-full text-lg font-medium border ${
+            category === "makeup"
+              ? "bg-[#CE93D8] text-white border-transparent"
+              : "bg-white text-[#4A4A4A] border-gray-300"
+          }`}
+        >
+          Makeup
+        </button>
+      </div>
+
+      {/* Main Layout */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Try-On Area */}
+        <div className="flex flex-col items-center justify-center flex-1 bg-[#E6E6FA] rounded-2xl p-6 shadow-lg">
+          {/* Preview Area */}
+          <div className="w-full h-full max-h-[500px] bg-[#F3F4F6] rounded-xl flex items-center justify-center overflow-hidden relative">
+            {overlayImage ? (
+              <img src={overlayImage} alt="Result" className="w-full h-full object-contain rounded-xl" />
+            ) : cameraOn ? (
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="w-full h-full object-cover rounded-xl"
+              />
+            ) : uploadedImage ? (
+              <img src={uploadedImage} alt="Uploaded" className="w-full h-full object-contain rounded-xl" />
+            ) : (
+              <span className="text-gray-400">Your image or live feed</span>
+            )}
+          </div>
+
+          {/* Buttons Group */}
+          <div className="flex flex-wrap justify-center gap-4 mt-6">
+            {/* Live Camera Button */}
             <button
-              className="mt-6 bg-[#81D4FA] text-white px-5 py-2 rounded-lg hover:bg-[#4FC3F7] transition"
+              className={`px-4 py-2 rounded-lg text-white transition ${
+                !useUpload ? "bg-[#81D4FA]" : "bg-gray-400"
+              }`}
               onClick={() => {
+                setUseUpload(false);
+                setOverlayImage(null);
+                setUploadedImage(null);
                 setCameraOn((prev) => !prev);
                 if (cameraOn) stopCamera();
               }}
             >
-              {cameraOn ? "Stop Camera" : "Start Camera"}
+              {cameraOn ? "Stop Camera" : "Use Live Camera"}
             </button>
 
-            {cameraOn && selectedCloth && (
+            {/* Hidden Upload Input */}
+            <input
+              type="file"
+              accept="image/*"
+              id="fileUpload"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    setUploadedImage(reader.result);
+                    setUseUpload(true);
+                    setOverlayImage(null);
+                    setCameraOn(false);
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+            />
+
+            {/* Upload Button (Triggers Hidden Input) */}
+            <button
+              className="px-4 py-2 rounded-lg text-white transition bg-[#81D4FA] hover:bg-[#4FC3F7]"
+              onClick={() => document.getElementById("fileUpload").click()}
+            >
+              Upload a Photo
+            </button>
+          </div>
+
+          {/* Try-On + Reset Buttons */}
+          <div className="flex gap-4 mt-4">
+            {(selectedCloth && (cameraOn || uploadedImage)) && !overlayImage && (
               <button
-                className="mt-4 bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
+                className="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
                 onClick={handleTryOn}
               >
-                Try Selected Cloth
+                Try Selected {category === "clothes" ? "Cloth" : "Makeup"}
+              </button>
+            )}
+            {overlayImage && (
+              <button
+                className="bg-red-400 text-white px-5 py-2 rounded-lg hover:bg-red-500 transition"
+                onClick={handleReset}
+              >
+                Reset Try-On
               </button>
             )}
           </div>
+        </div>
 
-          {/* Item List */}
-          <div className="w-full lg:w-[350px] bg-[#E6E6FA] rounded-2xl p-6 shadow-lg overflow-y-auto max-h-[90vh]">
-            <h2 className="text-xl font-semibold text-[#4A4A4A] mb-4">
-              Try {category === "clothes" ? "Clothes" : "Makeup"}
-            </h2>
+        {/* Item List */}
+        <div className="w-full lg:w-[350px] bg-[#E6E6FA] rounded-2xl p-6 shadow-lg overflow-y-auto max-h-[90vh]">
+          <h2 className="text-xl font-semibold text-[#4A4A4A] mb-4">
+            Try {category === "clothes" ? "Clothes" : "Makeup"}
+          </h2>
 
-            {category === "makeup" && loading ? (
-              <p className="text-gray-500">Loading makeup items...</p>
-            ) : (
-              <div className="grid grid-cols-3 gap-4">
-                {items.map((item) => (
-                  <img
-                    key={item.id}
-                    src={item.image}
-                    onClick={() => setSelectedCloth(item)}
-                    className={`rounded-xl h-24 w-24 object-contain cursor-pointer hover:scale-105 transition ${
-                      selectedCloth?.id === item.id ? "ring-4 ring-blue-400" : ""
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          {category === "makeup" && loading ? (
+            <p className="text-gray-500">Loading makeup items...</p>
+          ) : (
+            <div className="grid grid-cols-3 gap-4">
+              {items.map((item) => (
+                <img
+                  key={item.id}
+                  src={item.image}
+                  onClick={() => setSelectedCloth(item)}
+                  className={`rounded-xl h-24 w-24 object-contain cursor-pointer hover:scale-105 transition ${
+                    selectedCloth?.id === item.id ? "ring-4 ring-blue-400" : ""
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default TryOnPage;
