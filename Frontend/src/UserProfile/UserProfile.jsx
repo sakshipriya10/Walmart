@@ -189,7 +189,8 @@ const UserProfile = () => {
         navigate("/Home");
       }}>Logout</button>
       <button className="btn bg-pink-200 hover:bg-pink-300 text-pink-800 rounded py-2" onClick={() => navigate("/address")}>Address</button>
-      <button className="btn bg-pink-200 hover:bg-pink-300 text-pink-800 rounded py-2 col-span-2 sm:col-span-1">Orders</button>
+      <Link to="/orders" className="btn bg-pink-200 hover:bg-pink-300 text-pink-800 rounded py-2 col-span-2 sm:col-span-1">📦 Orders</Link>
+
     </>
   ) : (
     <>
