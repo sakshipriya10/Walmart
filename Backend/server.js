@@ -19,6 +19,8 @@ import spinRoutes from './routes/spinRoutes.js';
 
 import addressRoutes from "./routes/addressRoutes.js";
 import assistantRoutes from "./routes/assistantRoutes.js";
+import feedbackRoutes from './routes/feedback.js';
+
 
 dotenv.config();
 const app = express();
@@ -55,7 +57,7 @@ app.use("/api/order", orderRoutes);
 app.use("/api/challenges", challengeRoutes);
 
 app.use("/api/cart", cartRoutes);
-
+app.use('/api/feedback', feedbackRoutes);
 
 
 // MongoDB connection
