@@ -40,17 +40,30 @@ const ChallengesQuests = ({ userId }) => {
     }
   };
 
-  const handleShareProduct = async () => {
-    try {
-      await axios.post("http://localhost:5000/api/challenges/share-product", {
-        userId,
-      });
-      fetchChallengeStatus();
-      toast.success("🚀 Product shared!");
-    } catch {
-      toast.error("Failed to share product.");
-    }
-  };
+  // const handleShareProduct = async () => {
+  //   try {
+  //     await axios.post("http://localhost:5000/api/challenges/share-product", {
+  //       userId,
+  //     });
+  //     fetchChallengeStatus();
+  //     toast.success("🚀 Product shared!");
+  //   } catch {
+  //     toast.error("Failed to share product.");
+  //   }
+  // };
+
+ 
+
+const handleShare = async () => {
+  try {
+    const userId = localStorage.getItem("userId"); // or from context
+    const res = await axios.post("/api/challenges/share", { userId });
+    alert(res.data.message);
+  } catch (err) {
+    alert(err.response?.data?.message || "Failed to share");
+  }
+};
+
 
   const catCount = challengeData?.challenges?.categoriesPurchased ?? 0;
   const reviewCnt = challengeData?.challenges?.productsReviewed ?? 0;
@@ -86,7 +99,7 @@ const ChallengesQuests = ({ userId }) => {
 
         {/* Share Challenge */}
         <div
-          onClick={handleShareProduct}
+          onClick={handleShare}
           className="cursor-pointer bg-purple-100 hover:bg-purple-300 transition-all duration-300 p-4 rounded-lg text-center transform hover:scale-[1.02] hover:shadow-md"
         >
           <p className="font-medium text-purple-800">

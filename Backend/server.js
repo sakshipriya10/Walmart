@@ -20,7 +20,7 @@ import spinRoutes from './routes/spinRoutes.js';
 import addressRoutes from "./routes/addressRoutes.js";
 import assistantRoutes from "./routes/assistantRoutes.js";
 import feedbackRoutes from './routes/feedback.js';
-import challengeRoutes from "./routes/challengeRoutes.js";
+
 
 
 dotenv.config();
