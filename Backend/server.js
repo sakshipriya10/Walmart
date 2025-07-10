@@ -20,6 +20,7 @@ import spinRoutes from './routes/spinRoutes.js';
 import addressRoutes from "./routes/addressRoutes.js";
 import assistantRoutes from "./routes/assistantRoutes.js";
 import feedbackRoutes from './routes/feedback.js';
+import challengeRoutes from "./routes/challengeRoutes.js";
 
 
 dotenv.config();
@@ -37,6 +38,7 @@ app.use(morgan("dev"));
 app.use("/api/address", addressRoutes);
 
 app.use("/api/assistant", assistantRoutes);
+app.use("/api/challenges", challengeRoutes);
 
 
 // app.use(cors({

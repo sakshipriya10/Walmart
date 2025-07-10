@@ -1,5 +1,6 @@
  import express from "express";
 import mongoose from "mongoose";
+import { shareProduct } from "../controllers/challengeController.js";
 const router = express.Router();
 
 const challengeSchema = new mongoose.Schema({
@@ -53,19 +54,23 @@ router.post("/review-product", async (req, res) => {
 });
 
 // Mark as shared
-router.post("/share-product", async (req, res) => {
-  const { userId } = req.body;
-  try {
-    const challenge = await Challenge.findOneAndUpdate(
-      { userId },
-      { "challenges.sharedOnSocial": true, $inc: { pointsEarned: 50 } },
-      { new: true, upsert: true }
-    );
-    res.json(challenge);
-  } catch (err) {
-    res.status(500).json({ error: "Server Error" });
-  }
-});
+// router.post("/share-product", async (req, res) => {
+//   const { userId } = req.body;
+//   try {
+//     const challenge = await Challenge.findOneAndUpdate(
+//       { userId },
+//       { "challenges.sharedOnSocial": true, $inc: { pointsEarned: 50 } },
+//       { new: true, upsert: true }
+//     );
+//     res.json(challenge);
+//   } catch (err) {
+//     res.status(500).json({ error: "Server Error" });
+//   }
+// });
+
+
+router.post("/share", shareProduct);
+
 
 // Fetch user challenge
 router.post("/get", async (req, res) => {

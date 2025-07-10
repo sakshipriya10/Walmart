@@ -19,6 +19,14 @@ const userSchema = new mongoose.Schema({
       qty: { type: Number, default: 1 },
     },
   ],
+
+
+  // REward point on sharing social media
+  points: { type: Number, default: 0 },
+  challenges: {
+    sharedProduct: { type: Boolean, default: false },
+    // other challenges...
+  }
 });
 
 export default mongoose.model("User", userSchema);
