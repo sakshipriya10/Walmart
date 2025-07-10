@@ -1,4 +1,3 @@
- // models/userModel.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -11,7 +10,7 @@ const userSchema = new mongoose.Schema({
   resetPasswordToken: String,
   resetPasswordExpires: Date,
 
-  // Wishlist and cart
+  // Wishlist and Cart
   wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   cart: [
     {
@@ -20,13 +19,25 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
-
-  // REward point on sharing social media
+  // Reward Points
   points: { type: Number, default: 0 },
+  bonusPoints: { type: Number, default: 0 },
+
+  // Challenges
   challenges: {
     sharedProduct: { type: Boolean, default: false },
     // other challenges...
+  },
+  challengeCompleted: {
+    type: Boolean,
+    default: false,
+  },
+
+  purchasedCategories: {
+    type: [String], // e.g., ["Men", "Women", "Makeup"]
+    default: [],
   }
 });
 
-export default mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+export default User;

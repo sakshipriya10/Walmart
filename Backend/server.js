@@ -20,6 +20,7 @@ import spinRoutes from './routes/spinRoutes.js';
 import addressRoutes from "./routes/addressRoutes.js";
 import assistantRoutes from "./routes/assistantRoutes.js";
 import feedbackRoutes from './routes/feedback.js';
+import leaderboardRoutes from './routes/leaderboardRoutes.js';
 
 
 
@@ -60,6 +61,7 @@ app.use("/api/challenges", challengeRoutes);
 
 app.use("/api/cart", cartRoutes);
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api', leaderboardRoutes);
 
 
 // MongoDB connection
