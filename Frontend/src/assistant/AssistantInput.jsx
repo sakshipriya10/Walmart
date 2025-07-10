@@ -1,4 +1,3 @@
- // ✅ AssistantInput.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +22,7 @@ const AssistantInput = () => {
       const data = await res.json();
       const foundProducts = data.products || [];
 
-      // ✅ Navigate to Products page with filtered result
+      // ✅ Navigate to /products with filtered result
       navigate("/products", {
         state: { fromAssistant: true, assistantProducts: foundProducts },
       });
@@ -56,4 +55,3 @@ const AssistantInput = () => {
 };
 
 export default AssistantInput;
-

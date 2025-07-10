@@ -1,8 +1,9 @@
- import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
+import ResultList from "./ResultList"; // adjust path if needed
 
 export default function AssistantPage() {
   const [message, setMessage] = useState("");
@@ -21,7 +22,6 @@ export default function AssistantPage() {
     }
   }, [browserSupportsSpeechRecognition]);
 
-  // Optional: Auto-fill from voice input
   useEffect(() => {
     setMessage(transcript);
   }, [transcript]);
@@ -95,25 +95,9 @@ export default function AssistantPage() {
 
       {response && (
         <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-3">🛍️ Results:</h2>
-          {response.length > 0 ? (
-            <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {response.map((product, index) => (
-                <li
-                  key={index}
-                  className="border p-4 rounded shadow-sm bg-white"
-                >
-                  <p className="font-bold capitalize">{product.category}</p>
-                  <p>Color: {product.color}</p>
-                  <p>Price: ₹{product.price}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-red-500">No matching products found.</p>
-          )}
+          <ResultList products={response} />
         </div>
       )}
     </div>
   );
-}
+} 

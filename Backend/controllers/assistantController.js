@@ -47,16 +47,19 @@ export const handleAssistantQuery = async (req, res) => {
     const query = {};
     if (filters.category) query.category = filters.category;
     if (filters.color) query.color = filters.color;
-    if (filters.price_max) query.price = { $lte: filters.price_max / 85 }; // if you stored prices in USD
+    if (filters.price_max) query.price = { $lte: filters.price_max / 85 };
 
-    const products = await Product.find(query).limit(20);
+    const products = await Product.find(query)
+      .select("name image price category color")
+      .limit(20);
+
+    console.log("🛒 Final Mongo Query:", query);
+    console.log("🔎 Matched Products:", products.map(p => ({ name: p.name, image: p.image })));
+
     res.json({ products });
   } catch (err) {
     console.error("❌ Assistant error:", err.message);
     res.status(500).json({ error: "Internal Server Error" });
-
-    console.log("🛒 Final Mongo Query:", query);
-console.log("🔎 Matched Products:", products.length);
-
   }
 };
+
