@@ -10,7 +10,6 @@ export default function Home() {
       <Navbar />
       <Hero />
      <FeaturedProducts />
-    <Link to="/profile" className="text-blue-600 underline">Go to Profile</Link>
     </div>
   );
 }

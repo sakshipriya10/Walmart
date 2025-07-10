@@ -59,7 +59,7 @@ const handleScrollToBottom = () => {
            Smart Shopping Tools
         </h2>
      
-        <p className="text-gray-600 max-w-2xl mx-auto mb-5">
+        <p className="text-white max-w-2xl mx-auto mb-5">
           ⚡️Ask questions to your AI assistant or scan real-world objects to unlock smart product recommendations and AR previews.
         </p>
 

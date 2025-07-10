@@ -1,5 +1,6 @@
 import React from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -47,14 +48,13 @@ const Footer = () => {
 
         {/* My Account */}
         <div>
-          <h3 className="font-semibold mb-4">My Account</h3>
-          <ul className="space-y-2 text-gray-600">
-            <li>My Profile</li>
-            <li>Order History</li>
-            <li>Order Tracking</li>
-            <li>Shopping Cart</li>
-          </ul>
-        </div>
+  <h3 className="font-semibold mb-4">My Account</h3>
+  <ul className="space-y-2 text-gray-600">
+    <li><Link to="/UserProfile" className="hover:underline">My Profile</Link></li>
+    <li><Link to="/orders" classname ="hover:underline">Your Orders</Link></li>
+    <li><Link to="/cart" className="hover:underline">Shopping Cart</Link></li>
+  </ul>
+</div>
 
         {/* Shop Departments */}
         <div>
@@ -63,7 +63,7 @@ const Footer = () => {
             <li>Men's & Women's Fashion</li>
             <li>Makeup & Skincare</li>
             <li>Accessories & Jewelry</li>
-            <li>Seasonal Collections</li>
+            <li>Footwears</li>
           </ul>
         </div>
       </div>
