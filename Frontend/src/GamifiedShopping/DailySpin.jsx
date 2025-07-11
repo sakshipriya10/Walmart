@@ -317,7 +317,7 @@ export default function DailySpin() {
             alt="Pointer"
             style={{
               position: 'absolute',
-              top: '20px',
+              top: '21px',
               left: '50%',
               transform: 'translateX(-50%)',
               width: 40,
