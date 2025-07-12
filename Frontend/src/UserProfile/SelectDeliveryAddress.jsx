@@ -35,17 +35,17 @@ export default function SelectDeliveryAddress() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#F8BBD0] to-[#E1BEE7]">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 w-[420px]">
+      <div className="bg-white rounded-3xl shadow-2xl p-8 w-[420px] flex flex-col items-center">
         <h2 className="text-2xl font-bold text-pink-500 mb-4 text-center">Select Delivery Address</h2>
         {addresses.length === 0 ? (
-          <div className="text-gray-600 text-center">No addresses found. Please add one.</div>
+          <div className="text-gray-600 text-center mb-6">No addresses found. Please add one.</div>
         ) : (
           <div className="flex flex-col gap-4">
             {addresses.map((addr) => (
               <label
                 key={addr._id}
                 className={`flex items-center border rounded-lg p-3 cursor-pointer ${
-                  selected === addr._id ? "border-pink-400 bg-pink-50" : "border-gray-200"
+                  selected === addr._id ? "border-pink-400 bg-pink-50" : "border-gray-200  "
                 }`}
               >
                 <input
@@ -63,6 +63,7 @@ export default function SelectDeliveryAddress() {
             ))}
           </div>
         )}
+        <hr className="w-full border-gray-300 my-6" />
         <button
   onClick={() => {
     if (!selected) {
@@ -73,7 +74,7 @@ export default function SelectDeliveryAddress() {
     console.log("Selected address stored:", selected);
     navigate("/place-order");
   }}
-  className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded"
+  className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded "
 >
   Confirm Delivery Address
 </button>

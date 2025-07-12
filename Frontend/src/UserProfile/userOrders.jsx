@@ -42,7 +42,8 @@ export default function Orders() {
   }
 
   return (
-    <div className="w-screen min-h-screen p-6 bg-[#FEF5EF]">
+    <div className="w-screen min-h-screen p-6 bg-gradient-to-br from-pink-100 to-blue-100">
+
       <h2 className="text-3xl font-bold text-pink-600 mb-6 text-center">Your Orders</h2>
 
       {orders.length === 0 ? (

@@ -62,7 +62,8 @@ export default function PlaceOrder() {
 };
 
   return (
-    <div className="w-screen min-h-screen flex flex-col items-center bg-[#FFFBFA] py-8 px-4">
+    <div className="w-screen min-h-screen flex flex-col items-center bg-gradient-to-br from-pink-100 to-blue-100 py-8 px-4">
+
       <h2 className="text-2xl font-bold text-pink-700 mb-6">Confirm Your Order</h2>
 
       {/* Cart Summary */}
