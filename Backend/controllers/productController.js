@@ -58,3 +58,22 @@ export const getTrendingProducts = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch trending products" });
   }
 };
+
+export const getRelatedProducts = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    const related = await Product.find({
+      category: product.category,
+      _id: { $ne: productId },
+    }).limit(2);
+
+    res.json(related);
+  } catch (err) {
+    console.error("Error fetching related items:", err);
+    res.status(500).json({ message: "Failed to fetch related products" });
+  }
+};
