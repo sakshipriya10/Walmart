@@ -56,13 +56,36 @@ const ChallengesQuests = ({ userId }) => {
 
 const handleShare = async () => {
   try {
-    const userId = localStorage.getItem("userId"); // or from context
-    const res = await axios.post("/api/challenges/share", { userId });
-    alert(res.data.message);
+    // Step 1: Trigger native share
+    await navigator.share({
+      title: 'UrbanEDGE Mart',
+      text: 'Found this on UrbanEDGE Mart, have a look!',
+      url: 'https://your-homepage-url.com/',  // 🔁 PUT YOUR HOMEPAGE LINK HERE
+      // Example: 'https://urbanedgemart.vercel.app/'
+    });
+
+    // Step 2: Get JWT token from localStorage
+    const token = localStorage.getItem('token'); // Make sure this token is stored on login
+
+    // Step 3: Call backend to reward points
+    await axios.post(
+      '/api/challenges/share',
+      {}, // No body needed
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ Send token in Authorization header
+        },
+      }
+    );
+
+    console.log("✅ Reward granted for sharing!");
+
   } catch (err) {
-    alert(err.response?.data?.message || "Failed to share");
+    console.error('❌ Error in handleShare:', err.response?.data || err.message);
   }
 };
+
+
 
 
   const catCount = challengeData?.challenges?.categoriesPurchased ?? 0;

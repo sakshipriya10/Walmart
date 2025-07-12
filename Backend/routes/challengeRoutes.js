@@ -1,5 +1,7 @@
  import express from "express";
 import mongoose from "mongoose";
+import { verifyJWT } from '../middlewares/authMiddleware.js';
+
 import { shareProduct } from "../controllers/challengeController.js";
 const router = express.Router();
 
@@ -25,7 +27,7 @@ router.post("/category-purchase", async (req, res) => {
       { new: true, upsert: true }
     );
     if (challenge.challenges.categoriesPurchased >= 3) {
-      challenge.pointsEarned += 100;
+      challenge.pointsEarned += 50;
       await challenge.save();
     }
     res.json(challenge);
@@ -44,7 +46,7 @@ router.post("/review-product", async (req, res) => {
       { new: true, upsert: true }
     );
     if (challenge.challenges.productsReviewed >= 5) {
-      challenge.pointsEarned += 150;
+      challenge.pointsEarned += 50;
       await challenge.save();
     }
     res.json(challenge);
@@ -67,14 +69,9 @@ router.post("/review-product", async (req, res) => {
 //     res.status(500).json({ error: "Server Error" });
 //   }
 // });
+router.post("/get", verifyJWT, async (req, res) => {
+  const userId = req.user.id; // ✅ from verified JWT
 
-
-router.post("/share", shareProduct);
-
-
-// Fetch user challenge
-router.post("/get", async (req, res) => {
-  const { userId } = req.body;
   try {
     const challenge = await Challenge.findOne({ userId });
     res.json(challenge || { pointsEarned: 0 });
@@ -82,5 +79,6 @@ router.post("/get", async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 });
+
 
 export default router;
