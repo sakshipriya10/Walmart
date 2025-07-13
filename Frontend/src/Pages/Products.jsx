@@ -148,11 +148,11 @@ const Products = () => {
           >
             <img
               src={product.image || product.thumbnail}
-              alt={product.title}
+              alt={product.name}
               className="h-48 w-full object-contain mb-4 rounded"
             />
             <h2 className="text-lg font-semibold text-gray-800 mb-1">
-              {product.title}
+              {product.name}
             </h2>
             <p className="text-pink-600 font-bold text-md">
               ₹{Math.round(product.price * 85)}

@@ -15,27 +15,35 @@ const ProductDetails = () => {
   const [rating, setRating] = useState(0);
 const [hover, setHover] = useState(null);
 const [reviewText, setReviewText] = useState("");
+const [reviews, setReviews] = useState([]);
+
 
 
   useEffect(() => {
   let ignore = false;
 
-  const fetchProduct = async () => {
+  const fetchProductAndReviews = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/products/${id}?increment=true`);
-      if (!ignore) setProduct(res.data);
+      const productRes = await axios.get(`http://localhost:5000/api/products/${id}?increment=true`);
+      const feedbackRes = await axios.get(`http://localhost:5000/api/feedback/${id}`);
+
+      if (!ignore) {
+        setProduct(productRes.data);
+        setReviews(feedbackRes.data);
+      }
     } catch (err) {
-      console.error("Error loading product:", err);
+      console.error("Error loading product or reviews:", err);
       if (!ignore) setProduct(null);
     }
   };
 
-  fetchProduct();
+  fetchProductAndReviews();
 
   return () => {
     ignore = true;
   };
 }, [id]);
+
 
 if (!product)
     return <p className="p-6 text-center text-gray-600">Product not found or failed to load.</p>;
@@ -103,6 +111,9 @@ const handleSubmitFeedback = async () => {
     );
 
     toast.success("Feedback submitted successfully!");
+    const updatedReviews = await axios.get(`http://localhost:5000/api/feedback/${product._id}`);
+setReviews(updatedReviews.data);
+
     setRating(0);
     setReviewText("");  // ✅ corrected this
   } catch (error) {
@@ -113,98 +124,128 @@ const handleSubmitFeedback = async () => {
 
 
 
-  return (
-  <div className="p-6 min-h-screen bg-[#FDEEF4] flex flex-col items-center md:items-start md:flex-row md:justify-center gap-12">
-    {/* Product Image */}
-    <img
-      src={product.image || product.thumbnail}
-      alt={product.title}
-      className="h-96 object-contain rounded-3xl shadow-xl bg-white p-4"
-    />
+ return (
+  <div className="p-6 min-h-screen bg-[#FDEEF4]">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
 
-    {/* Product Info */}
-    <div className="w-full max-w-2xl">
-      <h2 className="text-4xl font-bold mb-4 text-pink-600">{product.title}</h2>
-      <p className="text-gray-700 mb-4">{product.description}</p>
-      <p className="text-2xl text-pink-500 font-extrabold mb-4">
-        ₹{Math.round(product.price * 85)}
-      </p>
-      <p className="text-sm bg-pink-100 px-3 py-1 rounded-full inline-block capitalize text-pink-600 font-medium">
-        Category: {product.category}
-      </p>
+      {/* 🔵 LEFT COLUMN */}
+      <div className="bg-white p-6 rounded-3xl shadow-lg flex flex-col items-center text-center">
+        <img
+          src={product.image || product.thumbnail}
+          alt={product.name}
+          className="h-96 object-contain rounded-xl mb-6"
+        />
+        <h2 className="text-3xl font-bold text-pink-600 mb-2">{product.name}</h2>
+        <p className="text-md bg-pink-100 text-pink-700 px-4 py-1 rounded-full mb-2 capitalize">
+          Category: {product.category}
+        </p>
+        <p className="text-2xl font-extrabold text-pink-500">₹{Math.round(product.price * 85)}</p>
+        {/* Buttons Below Product */}
+<div className="mt-6 flex flex-col sm:flex-row gap-4">
+  <button
+    className="flex-1 bg-pink-500 text-white text-lg px-5 py-1 rounded-full hover:bg-pink-600 transition font-semibold flex items-center justify-center gap-2 shadow"
+    onClick={handleAddToWishlist}
+  >
+    <FaHeart className="text-white" /> Add to Wishlist
+  </button>
+  <button
+    className="flex-1 bg-pink-500 text-white text-lg px-5 py-1 rounded-full hover:bg-pink-600 transition font-semibold shadow"
+    onClick={handleAddToCart}
+  >
+    Add to Cart
+  </button>
+</div>
 
-      {/* Buttons */}
-      <div className="mt-6 flex flex-wrap gap-4">
-        <button
-          className="bg-pink-100 text-pink-600 px-6 py-2 rounded-full hover:bg-pink-200 transition font-semibold flex items-center gap-2 shadow-sm"
-          onClick={handleAddToWishlist}
-        >
-          <FaHeart className="text-pink-500" /> Add to Wishlist
-        </button>
-        <button
-          className="bg-pink-100 text-pink-600 px-6 py-2 rounded-full hover:bg-pink-200 transition font-semibold shadow-sm"
-          onClick={handleAddToCart}
-        >
-          Add to Cart
-        </button>
       </div>
 
-      {/* Share Rewards */}
-      <div className="mt-6">
+      {/* 🟣 RIGHT COLUMN */}
+      <div className="flex flex-col gap-8">
+    
+
+        {/* 👉 SHARE REWARD */}
         <ShareRewardCard userId={user?._id} productId={product?._id} />
-      </div>
 
-      {/* Review Section */}
-      <div className="w-full mt-10 bg-white p-6 rounded-3xl shadow-lg">
-        <h3 className="text-2xl font-semibold mb-4 text-pink-600">Leave a Review</h3>
+        {/* ✍️ REVIEW FORM */}
+        <div className="bg-white p-6 rounded-3xl shadow-lg">
+          <h3 className="text-2xl font-semibold mb-4 text-pink-600">Leave a Review</h3>
 
-        {/* Star Rating */}
-        <div className="flex items-center mb-4">
-          {[...Array(5)].map((_, i) => {
-            const currentRating = i + 1;
-            return (
-              <label key={i}>
-                <input
-                  type="radio"
-                  name="rating"
-                  value={currentRating}
-                  onClick={() => setRating(currentRating)}
-                  className="hidden"
-                />
-                <FaStar
-                  size={28}
-                  className={`cursor-pointer transition-colors ${
-                    currentRating <= (hover || rating)
-                      ? "text-yellow-400"
-                      : "text-gray-300"
-                  }`}
-                  onMouseEnter={() => setHover(currentRating)}
-                  onMouseLeave={() => setHover(null)}
-                />
-              </label>
-            );
-          })}
+          {/* Stars */}
+          <div className="flex items-center mb-4">
+            {[...Array(5)].map((_, i) => {
+              const currentRating = i + 1;
+              return (
+                <label key={i}>
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={currentRating}
+                    onClick={() => setRating(currentRating)}
+                    className="hidden"
+                  />
+                  <FaStar
+                    size={28}
+                    className={`cursor-pointer transition-colors ${
+                      currentRating <= (hover || rating)
+                        ? "text-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                    onMouseEnter={() => setHover(currentRating)}
+                    onMouseLeave={() => setHover(null)}
+                  />
+                </label>
+              );
+            })}
+          </div>
+
+          {/* Textarea */}
+          <textarea
+            placeholder="Write your feedback here..."
+            className="w-full h-24 p-3 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-pink-300"
+            value={reviewText}
+            onChange={(e) => setReviewText(e.target.value)}
+          />
+
+          {/* Submit */}
+          <button
+            onClick={handleSubmitFeedback}
+            className="mt-4 px-6 py-2 bg-pink-500 text-white font-semibold rounded-full hover:bg-pink-600 transition shadow"
+          >
+            Submit Feedback
+          </button>
         </div>
 
-        {/* Textarea */}
-        <textarea
-          placeholder="Write your feedback here..."
-          className="w-full h-24 p-3 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-pink-300"
-          value={reviewText}
-          onChange={(e) => setReviewText(e.target.value)}
-        />
+        {/* 💬 REVIEWS LIST */}
+        <div className="bg-white p-6 rounded-3xl shadow-lg">
+          <h3 className="text-2xl font-semibold mb-4 text-pink-600">Customer Reviews</h3>
 
-        {/* Submit */}
-        <button
-          onClick={handleSubmitFeedback}
-          className="mt-4 px-6 py-2 bg-pink-500 text-white font-semibold rounded-full hover:bg-pink-600 transition shadow"
-        >
-          Submit Feedback
-        </button>
+          {reviews.length === 0 ? (
+            <p className="text-gray-500">No reviews yet.</p>
+          ) : (
+            <div className="space-y-4">
+              {reviews.map((rev) => (
+                <div key={rev._id} className="border-b pb-4">
+                  <div className="flex items-center gap-1 mb-1">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar
+                        key={i}
+                        size={16}
+                        className={`${
+                          i < rev.rating ? "text-yellow-400" : "text-gray-300"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-gray-700">{rev.reviewText}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   </div>
 );
+
 };
 
 export default ProductDetails;
