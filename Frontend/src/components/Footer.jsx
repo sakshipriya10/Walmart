@@ -15,12 +15,13 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <div className="text-3xl mb-2">💳</div>
-          <h3 className="font-semibold text-lg">Secure Online Payment</h3>
-          <p className="text-sm text-gray-600">
-            Pay with confidence using our fully encrypted payment gateway.
-          </p>
-        </div>
+  <div className="text-3xl mb-2">🪞</div>
+  <h3 className="font-semibold text-lg">Virtual Try-On</h3>
+  <p className="text-sm text-gray-600">
+    Try fashion products virtually before you buy — all from your device!
+  </p>
+</div>
+
         <div>
           <div className="text-3xl mb-2">🔄</div>
           <h3 className="font-semibold text-lg">Easy Returns</h3>
