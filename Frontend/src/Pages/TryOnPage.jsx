@@ -27,7 +27,6 @@ const localTryonClothes = [
 ];
 
 const TryOnPage = () => {
-  const [category, setCategory] = useState("clothes");
   const [cameraOn, setCameraOn] = useState(false);
   const [useUpload, setUseUpload] = useState(false);
   const [selectedCloth, setSelectedCloth] = useState(null);
@@ -35,11 +34,11 @@ const TryOnPage = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const [fitType, setFitType] = useState("medium");
+
 
   const { allProducts, loading } = useProductData();
-  const makeup = allProducts.filter((p) => p.category === "makeup");
-
-  const items = category === "clothes" ? localTryonClothes : makeup;
+  const items = localTryonClothes;
 
   useEffect(() => {
     if (cameraOn && videoRef.current) {
@@ -93,6 +92,7 @@ const TryOnPage = () => {
   const formData = new FormData();
   formData.append("userImage", userBlob, "user.png");
   formData.append("itemImage", clothBlob, "cloth.png");
+  formData.append("fit", fitType);
 
   try {
     const res = await fetch("http://localhost:5000/api/tryon", {
@@ -126,28 +126,22 @@ const handleReset = () => {
     <div className="max-w-[1440px] mx-auto px-6 py-8">
       <h1 className="text-4xl font-bold text-[#4A4A4A] text-center mb-6">Virtual Try-On</h1>
 
-      {/* Category Switch */}
-      <div className="flex justify-center gap-4 mb-6">
-        <button
-          onClick={() => setCategory("clothes")}
-          className={`px-6 py-2 rounded-full text-lg font-medium border ${
-            category === "clothes"
-              ? "bg-[#F8BBD0] text-white border-transparent"
-              : "bg-white text-[#4A4A4A] border-gray-300"
-          }`}
-        >
-          Clothes
-        </button>
-        <button
-          onClick={() => setCategory("makeup")}
-          className={`px-6 py-2 rounded-full text-lg font-medium border ${
-            category === "makeup"
-              ? "bg-[#CE93D8] text-white border-transparent"
-              : "bg-white text-[#4A4A4A] border-gray-300"
-          }`}
-        >
-          Makeup
-        </button>
+      {/* Fit Type Toggle */}
+      <div className="flex justify-center mb-6 gap-2">
+        <span className="text-sm font-medium text-gray-600">Fit Style:</span>
+        {["tight", "medium", "loose"].map((fit) => (
+          <button
+            key={fit}
+            onClick={() => setFitType(fit)}
+            className={`px-3 py-1 text-sm rounded-full border transition-all ${
+              fitType === fit
+                ? "bg-pink-200 text-gray-800 border-pink-300 font-semibold"
+                : "bg-white text-gray-600 border-gray-300 hover:bg-gray-100"
+            }`}
+          >
+            {fit.charAt(0).toUpperCase() + fit.slice(1)}
+          </button>
+        ))}
       </div>
 
       {/* Main Layout */}
@@ -174,7 +168,6 @@ const handleReset = () => {
 
           {/* Buttons Group */}
           <div className="flex flex-wrap justify-center gap-4 mt-6">
-            {/* Live Camera Button */}
             <button
               className={`px-4 py-2 rounded-lg text-white transition ${
                 !useUpload ? "bg-[#81D4FA]" : "bg-gray-400"
@@ -190,7 +183,6 @@ const handleReset = () => {
               {cameraOn ? "Stop Camera" : "Use Live Camera"}
             </button>
 
-            {/* Hidden Upload Input */}
             <input
               type="file"
               accept="image/*"
@@ -211,7 +203,6 @@ const handleReset = () => {
               }}
             />
 
-            {/* Upload Button (Triggers Hidden Input) */}
             <button
               className="px-4 py-2 rounded-lg text-white transition bg-[#81D4FA] hover:bg-[#4FC3F7]"
               onClick={() => document.getElementById("fileUpload").click()}
@@ -227,7 +218,7 @@ const handleReset = () => {
                 className="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
                 onClick={handleTryOn}
               >
-                Try Selected {category === "clothes" ? "Cloth" : "Makeup"}
+                Try Selected Cloth
               </button>
             )}
             {overlayImage && (
@@ -243,31 +234,26 @@ const handleReset = () => {
 
         {/* Item List */}
         <div className="w-full lg:w-[350px] bg-[#E6E6FA] rounded-2xl p-6 shadow-lg overflow-y-auto max-h-[90vh]">
-          <h2 className="text-xl font-semibold text-[#4A4A4A] mb-4">
-            Try {category === "clothes" ? "Clothes" : "Makeup"}
-          </h2>
+          <h2 className="text-xl font-semibold text-[#4A4A4A] mb-4">Try Clothes</h2>
 
-          {category === "makeup" && loading ? (
-            <p className="text-gray-500">Loading makeup items...</p>
-          ) : (
-            <div className="grid grid-cols-3 gap-4">
-              {items.map((item) => (
-                <img
-                  key={item.id}
-                  src={item.image}
-                  onClick={() => setSelectedCloth(item)}
-                  className={`rounded-xl h-24 w-24 object-contain cursor-pointer hover:scale-105 transition ${
-                    selectedCloth?.id === item.id ? "ring-4 ring-blue-400" : ""
-                  }`}
-                />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-3 gap-4">
+            {items.map((item) => (
+              <img
+                key={item.id}
+                src={item.image}
+                onClick={() => setSelectedCloth(item)}
+                className={`rounded-xl h-24 w-24 object-contain cursor-pointer hover:scale-105 transition ${
+                  selectedCloth?.id === item.id ? "ring-4 ring-blue-400" : ""
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 );
+
 
 };
 
