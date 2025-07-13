@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom"; // ✅ added useLocation
 import axios from "axios";
-import { FaHeart } from "react-icons/fa"; // 
-import { FaStar } from "react-icons/fa";
+import { FaHeart, FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 import ShareRewardCard from "../components/ShareRewardCard";
 
-
 const ProductDetails = () => {
   const { id } = useParams();
+  const location = useLocation(); // ✅ access passed state
   const [product, setProduct] = useState(null);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user")); 
@@ -20,7 +19,7 @@ const [reviews, setReviews] = useState([]);
 
 
   useEffect(() => {
-  let ignore = false;
+    let ignore = false;
 
   const fetchProductAndReviews = async () => {
     try {
@@ -37,6 +36,7 @@ const [reviews, setReviews] = useState([]);
     }
   };
 
+    fetchProduct();
   fetchProductAndReviews();
 
   return () => {
@@ -45,66 +45,64 @@ const [reviews, setReviews] = useState([]);
 }, [id]);
 
 
-if (!product)
+  if (!product)
     return <p className="p-6 text-center text-gray-600">Product not found or failed to load.</p>;
-const handleAddToWishlist = async () => {
-  try {
-    await axios.post(
-      `/api/wishlist/${product._id}`,
-      {
-        name: product.title,
-        price: Math.round(product.price * 85),
-        image: product.image || product.thumbnail,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+
+  const handleAddToWishlist = async () => {
+    try {
+      await axios.post(
+        `/api/wishlist/${product._id}`,
+        {
+          name: product.title,
+          price: Math.round(product.price * 85),
+          image: product.image || product.thumbnail,
         },
-      }
-    );
-    toast.success("Added to Wishlist");
-  } catch (error) {
-    console.error("Error adding to wishlist:", error);
-    toast.error("Could not add to wishlist");
-  }
-};
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success("Added to Wishlist");
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+      toast.error("Could not add to wishlist");
+    }
+  };
 
-const handleAddToCart = async () => {
-  try {
-    await axios.post(
-      `/api/cart/${product._id}`,
-      {
-        name: product.name || product.title || "Unnamed Product",
-        price: Math.round(product.price * 85),
-        image: product.image || product.thumbnail,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+  const handleAddToCart = async () => {
+    try {
+      await axios.post(
+        `/api/cart/${product._id}`,
+        {
+          name: product.name || product.title || "Unnamed Product",
+          price: Math.round(product.price * 85),
+          image: product.image || product.thumbnail,
         },
-      }
-    );
-    toast.success("Added to Cart");
-  } catch (err) {
-    console.error("Error adding to cart:", err);
-    toast.error(err.response?.data?.error || "Could not add to cart");
-  }
-};
-const handleSubmitFeedback = async () => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const userId = user?.id;
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success("Added to Cart");
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      toast.error(err.response?.data?.error || "Could not add to cart");
+    }
+  };
 
-  if (!userId) {
-    alert("Please login to submit feedback.");
-    return;
-  }
+  const handleSubmitFeedback = async () => {
+    const userId = user?._id;
+    if (!userId) {
+      toast.error("Please login to submit feedback.");
+      return;
+    }
 
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/feedback",
-      {
+    try {
+      await axios.post("http://localhost:5000/api/feedback", {
         productId: product._id,
-        userId: userId,
+        userId,
         rating,
         comment: reviewText,  // ✅ corrected this
       }
@@ -165,8 +163,8 @@ setReviews(updatedReviews.data);
         {/* 👉 SHARE REWARD */}
         <ShareRewardCard userId={user?._id} productId={product?._id} />
 
-        {/* ✍️ REVIEW FORM */}
-        <div className="bg-white p-6 rounded-3xl shadow-lg">
+        {/* Review Section */}
+        <div className="w-full mt-10 bg-white p-6 rounded-3xl shadow-lg">
           <h3 className="text-2xl font-semibold mb-4 text-pink-600">Leave a Review</h3>
 
           {/* Stars */}

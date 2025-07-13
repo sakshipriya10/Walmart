@@ -1,33 +1,49 @@
-import User from "../models/userModel.js";
+// import User from "../models/userModel.js";
+
+
 // export const shareProduct = async (req, res) => {
 //   try {
-//     const { userId } = req.body;
+//     const userId = req.user.id; // ✅ this must exist
+//     console.log("User ID:", userId); // Debug log
 
-//     // Find user by ID
-//     const user = await User.findById(userId);
-//     if (!user) return res.status(404).json({ message: "User not found" });
+//     // Continue your logic (update points, etc.)
 
-//     // Add points for sharing
-//     user.rewardPoints += 10;
-//     await user.save();
-
-//     res.status(200).json({ message: "Product shared successfully!", points: user.rewardPoints });
-//   } catch (error) {
-//     console.error("❌ Error in shareProduct:", error.message);  // <== Log the actual error
-//     res.status(500).json({ message: "Internal server error" });
+//     res.status(200).json({ message: 'Shared successfully!' });
+//   } catch (err) {
+//     console.error("Error in shareProduct:", err.message);
+//     res.status(500).json({ error: 'Server error' });
 //   }
 // };
 
+import { Challenge } from "../models/challengeModel.js"; 
+ // Or wherever your Challenge model is declared
+
 export const shareProduct = async (req, res) => {
   try {
-    const userId = req.user.id; // ✅ this must exist
-    console.log("User ID:", userId); // Debug log
+    const userId = req.user.id;
 
-    // Continue your logic (update points, etc.)
+    let challenge = await Challenge.findOne({ userId });
 
-    res.status(200).json({ message: 'Shared successfully!' });
+    if (!challenge) {
+      challenge = await Challenge.create({
+        userId,
+        challenges: { sharedOnSocial: true },
+        pointsEarned: 50,
+      });
+      return res.status(200).json({ message: "You earned 50 bonus points for sharing!", challenge });
+    }
+
+    if (challenge.challenges.sharedOnSocial) {
+      return res.status(200).json({ message: "You've already shared and earned points.", challenge });
+    }
+
+    challenge.challenges.sharedOnSocial = true;
+    challenge.pointsEarned += 50;
+    await challenge.save();
+
+    return res.status(200).json({ message: "You earned 50 bonus points for sharing!", challenge });
   } catch (err) {
     console.error("Error in shareProduct:", err.message);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 };
