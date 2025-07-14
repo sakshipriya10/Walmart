@@ -7,6 +7,7 @@ import ChallengesQuests from "./ChallengesQuests";
 import FlashSale from "./FlashSale";
 // import ScratchCard from "./ScratchCard"; // ✅ Import Scratch Card
 import ScratchCard from "../components/ScratchCard";
+import MiniQuiz from ".//MiniQuiz";
 
 
 export default function ShoppingPage() {
@@ -41,6 +42,9 @@ export default function ShoppingPage() {
 
         <div className="rounded-xl shadow p-4 h-full transition-transform duration-300 bg-blue-50 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,0,255,0.3)] hover:ring-2 hover:ring-blue-300">
           <Leaderboard />
+        </div>
+        <div className="rounded-xl shadow p-4 h-full transition-transform duration-300 bg-blue-50 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,0,255,0.3)] hover:ring-2 hover:ring-blue-300">
+          <MiniQuiz />
         </div>
       </div>
     </div>
