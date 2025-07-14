@@ -65,7 +65,7 @@ const Products = () => {
   if (loading) return <p className="text-center mt-8">Loading products...</p>;
 
   return (
-    <div className="p-6 bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA] min-h-screen">
+    <div className="p-6 bg-gradient-to-br from-[#FDEEF4] to-[#E0F7FA] min-h-screen w-screen">
       <h1 className="text-3xl font-bold text-center mb-4 text-gray-800">
         UrbanEdgeMART Collection
       </h1>

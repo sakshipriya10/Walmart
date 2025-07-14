@@ -18,9 +18,11 @@ UrbanEDGE Mart is a **next-gen smart e-commerce platform** designed to reimagine
 - Natural language understanding with AI backend (OpenRouter or Gemini)
 - Instant product results based on user intent
 
-### 🪄 Augmented Reality (AR)
-- Visualize products in your space
-- Seamless transition from object detection to AR try-on mode
+### 🪄 Gamified Shopping
+- Makes shopping more fun and interactive
+- Spin wheel and Scratch Cards for crazy deals and discounts 
+- Share products and get rewards 
+- leader board functionality according to bonous points
 
 ### ❤️ Wishlist & Cart
 - Add products to Wishlist with one click
@@ -46,14 +48,18 @@ UrbanEDGE Mart is a **next-gen smart e-commerce platform** designed to reimagine
 | React.js        | Node.js + Express| TensorFlow.js (COCO-SSD)| Clerk/Auth (optional) |
 | Tailwind CSS    | MongoDB + Mongoose | OpenRouter / Gemini API| React Router       |
 | React Carousel  | JWT Auth         | Voice Recognition (Web Speech API) | Figma (UI Design) |
-
+                  |cloudnary/nodemailer|OpenCV/MediaPipe/Numpy|
 ---
+
+
 
 ## 📸 Screenshots
 
-| Assistants | Virtual Try-On | Gamified | Urban Edge |
-|------------|----------------|----------|------------|
-| ![Assistants](./frontend/public/screenshots/aiAssistants.png) | ![TryOn](./frontend/public/screenshots/virtualTryOn.png) | ![Gamified](./frontend/public/screenshots/gamified.png) | ![Urban Edge](./frontend/public/screenshots/urbanEdge.png) |
+|UrbanEDGE Mart|| Assistants | Virtual TryOn | Gamified |
+|------------|----------------|-----------|--------------|
+||![Urbanedge](./Frontend/public/screenshots/urbanEdge.png)| ![Assistants](./Frontend/public/screenshots/aiAssistants.png) | ![TryOn](./Frontend/public/screenshots/virtualTryOn.png) | ![Gamified](./Frontend/public/screenshots/gamified.png) |
+
+---
 
 ## 🛠️ Installation & Setup
 
@@ -71,16 +77,22 @@ cd ../client
 npm install
 npm start
 
+```
 
-
-💡 Future Enhancements
+## Future Enhancements
 Product Try-on using 3D models
 Real-time chat assistant
 Enhanced search accuracy using embeddings
 Admin dashboard for inventory control
+---
 
-👨‍💻
 - Deployed link
 - Video demo link
-- Teammate credits 
+---
+
+- # Contributors 
+Aarti Kumari
+Komal Kumari
+Anjali Rani 
+Sakshi Priya
 

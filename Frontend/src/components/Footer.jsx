@@ -52,7 +52,7 @@ const Footer = () => {
   <h3 className="font-semibold mb-4">My Account</h3>
   <ul className="space-y-2 text-gray-600">
     <li><Link to="/UserProfile" className="hover:underline">My Profile</Link></li>
-    <li><Link to="/orders" classname ="hover:underline">Your Orders</Link></li>
+    <li><Link to="/orders" className ="hover:underline">Your Orders</Link></li>
     <li><Link to="/cart" className="hover:underline">Shopping Cart</Link></li>
   </ul>
 </div>
