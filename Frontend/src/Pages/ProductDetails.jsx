@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+  import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaHeart, FaStar } from "react-icons/fa";
@@ -22,7 +22,6 @@ const ProductDetails = () => {
       try {
         const productRes = await axios.get(`http://localhost:5000/api/products/${id}?increment=true`);
         const feedbackRes = await axios.get(`http://localhost:5000/api/feedback/${id}`);
-
         if (!ignore) {
           setProduct(productRes.data);
           setReviews(feedbackRes.data);
@@ -45,19 +44,15 @@ const ProductDetails = () => {
 
   const handleAddToWishlist = async () => {
     try {
-      await axios.post(
-        `/api/wishlist/${product._id}`,
-        {
-          name: product.title || product.name,
-          price: Math.round(product.price * 85),
-          image: product.image || product.thumbnail,
+      await axios.post(`/api/wishlist/${product._id}`, {
+        name: product.title || product.name,
+        price: Math.round(product.price * 85),
+        image: product.image || product.thumbnail,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      });
       toast.success("Added to Wishlist");
     } catch (error) {
       console.error("Error adding to wishlist:", error);
@@ -67,19 +62,15 @@ const ProductDetails = () => {
 
   const handleAddToCart = async () => {
     try {
-      await axios.post(
-        `/api/cart/${product._id}`,
-        {
-          name: product.name || product.title || "Unnamed Product",
-          price: Math.round(product.price * 85),
-          image: product.image || product.thumbnail,
+      await axios.post(`/api/cart/${product._id}`, {
+        name: product.name || product.title || "Unnamed Product",
+        price: Math.round(product.price * 85),
+        image: product.image || product.thumbnail,
+      }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      });
       toast.success("Added to Cart");
     } catch (err) {
       console.error("Error adding to cart:", err);
@@ -118,48 +109,49 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="p-6 min-h-screen bg-[#FDEEF4]">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* LEFT COLUMN */}
-        <div className="bg-white p-6 rounded-3xl shadow-lg flex flex-col items-center text-center">
+    <div className="p-6 min-h-screen w-screen bg-gradient-to-br from-pink-50 via-white to-purple-100">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        {/* LEFT: Product Overview */}
+        <div className="bg-white p-9 rounded-sm shadow-xl flex flex-col items-center text-center">
           <img
             src={product.image || product.thumbnail}
             alt={product.name}
-            className="h-96 object-contain rounded-xl mb-6"
+            className="h-96 object-contain rounded-2xl mb-6 shadow-md"
           />
-          <h2 className="text-3xl font-bold text-pink-600 mb-2">{product.name}</h2>
-          <p className="text-md bg-pink-100 text-pink-700 px-4 py-1 rounded-full mb-2 capitalize">
+          <h2 className="text-4xl font-bold text-black mb-3">{product.name}</h2>
+          <p className="text-md bg-purple-100 text-purple-700 px-4 py-1 rounded-full mb-3 capitalize">
             Category: {product.category}
           </p>
-          <p className="text-2xl font-extrabold text-pink-500">
+          <p className="text-3xl font-bold text-pink-500 mb-4">
             ₹{Math.round(product.price * 85)}
           </p>
 
-          <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full">
+          <div className="mt-4 flex flex-col sm:flex-row gap-4 w-full">
             <button
-              className="flex-1 bg-pink-500 text-white text-lg px-5 py-1 rounded-full hover:bg-pink-600 transition font-semibold flex items-center justify-center gap-2 shadow"
+              className="flex-1 bg-gradient-to-br from-pink-500 via-purple-400 to-blue-300 text-white px-2 py-3 rounded-full hover:shadow-[0_0_20px_#9333ea]
+               ring-0 ring-purple-500 transition-all duration-300 font-semibold flex items-center justify-center gap-3 shadow-lg"
               onClick={handleAddToWishlist}
             >
-              <FaHeart className="text-white" /> Add to Wishlist
+              <FaHeart /> Add to Wishlist
             </button>
             <button
-              className="flex-1 bg-pink-500 text-white text-lg px-5 py-1 rounded-full hover:bg-pink-600 transition font-semibold shadow"
+              className="flex-1 bg-gradient-to-br from-purple-400 via-blue-500 to-pink-300 text-white px-2 py-3 rounded-full hover:shadow-[0_0_20px_#3b82f6]
+               ring-0 ring-pink-500 transition-all duration-300 font-semibold flex items-center justify-center gap-3 shadow-lg"
               onClick={handleAddToCart}
             >
-              Add to Cart
+              Add to Cart 🛒
             </button>
           </div>
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="flex flex-col gap-8">
-          {/* SHARE REWARD */}
+        {/* RIGHT: Combined Section */}
+        <div className="bg-white p-8 rounded-sm shadow-sm flex flex-col gap-8">
+          {/* Share Reward */}
           <ShareRewardCard userId={user?._id} productId={product?._id} />
 
-          {/* REVIEW FORM */}
-          <div className="bg-white p-6 rounded-3xl shadow-lg">
-            <h3 className="text-2xl font-semibold mb-4 text-pink-600">Leave a Review</h3>
-
+          {/* Review Form */}
+          <div>
+            <h3 className="text-2xl font-bold text-pink-600 mb-4">Leave a Review</h3>
             <div className="flex items-center mb-4">
               {[...Array(5)].map((_, i) => {
                 const currentRating = i + 1;
@@ -189,23 +181,22 @@ const ProductDetails = () => {
 
             <textarea
               placeholder="Write your feedback here..."
-              className="w-full h-24 p-3 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-pink-300"
+              className="w-full h-28 p-4 border border-pink-300 rounded-xl bg-blue-50 resize-none focus:outline-none focus:ring-2 focus:ring-pink-400"
               value={reviewText}
               onChange={(e) => setReviewText(e.target.value)}
             />
 
             <button
               onClick={handleSubmitFeedback}
-              className="mt-4 px-6 py-2 bg-pink-500 text-white font-semibold rounded-full hover:bg-pink-600 transition shadow"
+              className="mt-4 px-6 py-3 bg-pink-500 text-white font-semibold rounded-full hover:bg-pink-600 transition shadow-lg"
             >
               Submit Feedback
             </button>
           </div>
 
-          {/* REVIEWS LIST */}
-          <div className="bg-white p-6 rounded-3xl shadow-lg">
-            <h3 className="text-2xl font-semibold mb-4 text-pink-600">Customer Reviews</h3>
-
+          {/* Reviews */}
+          <div>
+            <h3 className="text-2xl font-bold text-purple-700 mb-4">Customer Reviews</h3>
             {reviews.length === 0 ? (
               <p className="text-gray-500">No reviews yet.</p>
             ) : (
@@ -221,7 +212,7 @@ const ProductDetails = () => {
                         />
                       ))}
                     </div>
-                    <p className="text-gray-700">{rev.reviewText}</p>
+                    <p className="text-gray-700 italic">"{rev.reviewText}"</p>
                   </div>
                 ))}
               </div>

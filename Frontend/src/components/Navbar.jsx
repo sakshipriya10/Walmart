@@ -13,7 +13,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-white/60 border-b border-pink-200/60 px-6 py-3 shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-white/20 border-b border-pink-200/60 px-6 py-3 shadow-md">
       <div className="flex items-center justify-between flex-wrap">
         {/* Logo + Tagline */}
         <div className="flex flex-col">
