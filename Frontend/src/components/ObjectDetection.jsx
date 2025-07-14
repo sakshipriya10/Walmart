@@ -1,28 +1,31 @@
  import React, { useRef, useEffect, useState } from "react";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import "@tensorflow/tfjs";
+import { useNavigate } from "react-router-dom";
 
 const ObjectDetection = ({ setShowAR }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isDetecting, setIsDetecting] = useState(false);
   const [recommendation, setRecommendation] = useState("");
-  const [stream, setStream] = useState(null);
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
+  const [modelLoaded, setModelLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let model = null;
     let animationFrameId;
+    let localStream = null;
 
     const setupCamera = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+          videoRef.current.srcObject = localStream;
           videoRef.current.onloadedmetadata = () => {
             videoRef.current.play();
             runDetection();
           };
-          setStream(stream);
         }
       } catch (err) {
         console.error("❌ Camera access error:", err);
@@ -31,15 +34,13 @@ const ObjectDetection = ({ setShowAR }) => {
 
     const runDetection = async () => {
       model = await cocoSsd.load();
+      setModelLoaded(true);
       console.log("✅ COCO-SSD model loaded");
 
       const detectFrame = async () => {
-        if (
-          videoRef.current &&
-          videoRef.current.readyState === 4 &&
-          isDetecting
-        ) {
+        if (videoRef.current && isDetecting && modelLoaded) {
           const predictions = await model.detect(videoRef.current);
+          console.log("Predictions:", predictions);
           drawPredictions(predictions);
           showRecommendation(predictions);
         }
@@ -66,16 +67,33 @@ const ObjectDetection = ({ setShowAR }) => {
       });
     };
 
-    const showRecommendation = (predictions) => {
+    const showRecommendation = async (predictions) => {
       const objects = predictions.map((p) => p.class);
-      if (objects.includes("handbag")) {
-        setRecommendation("👜 Recommended: Trendy Handbags");
+      console.log("Detected:", objects);
+
+      let query = "";
+      if (objects.includes("handbag") || objects.includes("backpack")) {
+        setRecommendation("👜 Recommended: Trendy Handbags or Backpacks");
+        query = "handbag";
       } else if (objects.includes("person")) {
         setRecommendation("👕 Recommended: Outfit Ideas for You");
-      } else if (objects.includes("bottle")) {
-        setRecommendation("🥤 Recommended: Water Bottles");
+        query = "clothing";
+      } else if (objects.includes("earing")) {
+        setRecommendation("🌟 Recommended: Earings");
+        query = "earing";
       } else {
-        setRecommendation("");
+        setRecommendation("📦 Try detecting another object like bottle, handbag, or person.");
+        setRecommendedProducts([]);
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/products/search?q=${query}`);
+        const data = await res.json();
+        setRecommendedProducts(data);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setRecommendedProducts([]);
       }
     };
 
@@ -85,19 +103,26 @@ const ObjectDetection = ({ setShowAR }) => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
+      if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+        videoRef.current.srcObject = null;
       }
     };
-  }, [isDetecting]);
+  }, [isDetecting, modelLoaded]);
 
   const stopCamera = () => {
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      setStream(null);
+    if (videoRef.current && videoRef.current.srcObject) {
+      videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
     }
     setIsDetecting(false);
     setRecommendation("");
+    setRecommendedProducts([]);
+  };
+
+  const handleProductClick = (productId) => {
+    stopCamera();
+    navigate(`/products/${productId}`);
   };
 
   return (
@@ -110,7 +135,7 @@ const ObjectDetection = ({ setShowAR }) => {
       {!isDetecting ? (
         <button
           onClick={() => setIsDetecting(true)}
-          className="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition"
+          className="px-4 py-2 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded hover:shadow-[0_0_12px_#9333ea] transition"
         >
           Start Detection
         </button>
@@ -137,22 +162,48 @@ const ObjectDetection = ({ setShowAR }) => {
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <button
               onClick={stopCamera}
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+              className="px-4 py-2 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white rounded hover:shadow-[0_0_12px_#9333ea] transition"
             >
               ❌ Stop Detection
             </button>
 
-            <button
-              onClick={() => setShowAR(true)}
-              className="px-4 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition"
-            >
-              🪄 Try in AR
-            </button>
           </div>
 
           {recommendation && (
             <div className="mt-4 p-3 border rounded bg-pink-50 text-gray-800">
               <p className="text-md font-medium">{recommendation}</p>
+            </div>
+          )}
+
+          {recommendedProducts.length > 0 ? (
+            <div className="mt-6">
+              <h4 className="text-lg font-semibold text-gray-700 mb-2">🛍 Suggested Products</h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {recommendedProducts.map((product) => (
+                  <div
+                    key={product._id}
+                    className="border rounded-xl p-4 shadow-md bg-white"
+                  >
+                    <img
+                      src={product.image || product.thumbnail}
+                      alt={product.name}
+                      className="w-full h-40 object-contain mb-2 rounded"
+                    />
+                    <h5 className="font-bold text-pink-600">{product.name}</h5>
+                    <p className="text-sm text-gray-600">₹{Math.round(product.price * 85)}</p>
+                    <button
+                      onClick={() => handleProductClick(product._id)}
+                      className="mt-2 px-2 py-2 w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white border-rounder-lg hover:shadow-[0_0_12px_#9333ea] transition"
+                    >
+                      View Product
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center text-gray-500 italic mt-4">
+              No products matched the detected object.
             </div>
           )}
         </>

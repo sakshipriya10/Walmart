@@ -1,16 +1,13 @@
- import Product from "../models/productModel.js";
-import mongoose from "mongoose"; 
+  import Product from "../models/productModel.js";
+import mongoose from "mongoose";
 
 // @desc   Get all products
 // @route  GET /api/products
 // @access Public
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find(); // fetch all from MongoDB
-
-    // ✅ Debug: Show sample products in backend terminal
+    const products = await Product.find();
     console.log("🛍 Sample Products:", products.slice(0, 3));
-
     res.json(products);
   } catch (error) {
     console.error("❌ Error fetching products:", error);
@@ -23,9 +20,8 @@ export const getAllProducts = async (req, res) => {
 // @access Public
 export const getProductById = async (req, res) => {
   const { id } = req.params;
-  const { increment } = req.query; // check if ?increment=true is passed
+  const { increment } = req.query;
 
-  // ✅ Optional: Validate ObjectId if using MongoDB
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid product ID" });
   }
@@ -48,7 +44,9 @@ export const getProductById = async (req, res) => {
   }
 };
 
-
+// @desc   Get trending products
+// @route  GET /api/products/trending
+// @access Public
 export const getTrendingProducts = async (req, res) => {
   try {
     const trending = await Product.find().sort({ views: -1 }).limit(8);
@@ -59,6 +57,9 @@ export const getTrendingProducts = async (req, res) => {
   }
 };
 
+// @desc   Get related products
+// @route  GET /api/products/related/:productId
+// @access Public
 export const getRelatedProducts = async (req, res) => {
   const { productId } = req.params;
 
@@ -75,5 +76,27 @@ export const getRelatedProducts = async (req, res) => {
   } catch (err) {
     console.error("Error fetching related items:", err);
     res.status(500).json({ message: "Failed to fetch related products" });
+  }
+};
+
+// ✅ NEW: Search products by keyword
+// @desc   Search products
+// @route  GET /api/products/search?q=handbag
+// @access Public
+export const searchProducts = async (req, res) => {
+  const query = req.query.q;
+  try {
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { title: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+      ],
+    }).limit(6);
+
+    res.json(products);
+  } catch (error) {
+    console.error("❌ Error searching products:", error);
+    res.status(500).json({ message: "Search failed" });
   }
 };
