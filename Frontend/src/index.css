@@ -1,5 +1,6 @@
 
 
+
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 
@@ -28,8 +29,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(171, 169, 169, 0.87);
-  background-color: #efeeef;
+  color: rgba(221, 218, 218, 0.87);
+  background-color: #fefefe;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

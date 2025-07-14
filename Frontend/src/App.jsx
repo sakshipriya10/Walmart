@@ -22,6 +22,7 @@ import WishlistPage from "./Pages/WishlistPage";
 import SelectDeliveryAddress from "./UserProfile/SelectDeliveryAddress.jsx";
 import PlaceOrder from "./Pages/placeOrder.jsx";
 import UserOrders from "./UserProfile/userOrders.jsx";
+import Testimonials from "./components/Testimonials";
 
 
 
@@ -66,9 +67,18 @@ function AppWrapper() {
       </div>
 
       {/* ✅ Show footer only on Home page */}
-      {(location.pathname === "/" || location.pathname.toLowerCase() === "/home") && (
+      {/* {(location.pathname === "/" || location.pathname.toLowerCase() === "/home") && (
+          <Testimonials />
         <Footer />
-      )}
+
+      )} */}
+      {(location.pathname === "/" || location.pathname.toLowerCase() === "/home") && (
+  <>
+    <Testimonials />
+    <Footer />
+  </>
+)}
+
     </div>
   );
 }

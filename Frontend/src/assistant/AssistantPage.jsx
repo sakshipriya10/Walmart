@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+  import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -44,35 +44,35 @@ export default function AssistantPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-pink-600 mb-6">🧠 Smart Shopping Assistant</h1>
 
-      <div className="mb-4">
+      <div className="mb-4 bg-gradient-to-r from-pink-50 via-purple-50 to-blue-50 p-4 rounded-lg shadow-md">
         <textarea
           rows="3"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Describe what you're looking for..."
-          className="w-full border p-3 rounded shadow"
+          placeholder="🛍️ Describe what you're looking for..."
+          className="w-full rounded-xl p-4 text-gray-800 placeholder-gray-400 bg-gradient-to-br from-white via-blue-50 to-purple-100 border-2 border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 shadow-inner resize-none"
         ></textarea>
 
-        <div className="flex gap-3 mt-2">
+        <div className="flex flex-wrap gap-3 mt-3">
           <button
             onClick={handleSubmit}
-            className="bg-pink-400 hover:bg-pink-500 text-white px-4 py-2 rounded"
+            className="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:shadow-lg text-white px-4 py-2 rounded-full transition"
           >
-            Search
+            🔍 Search
           </button>
 
           <button
             onClick={() => SpeechRecognition.startListening({ continuous: true })}
-            className="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-gradient-to-r from-blue-400 to-blue-600 hover:shadow-lg text-white px-4 py-2 rounded-full transition"
           >
-            Start Voice
+            🎙️ Start Voice
           </button>
 
           <button
             onClick={SpeechRecognition.stopListening}
-            className="bg-cyan-400 hover:bg-cyan-500 text-white px-4 py-2 rounded"
+            className="bg-gradient-to-r from-cyan-400 to-cyan-600 hover:shadow-lg text-white px-4 py-2 rounded-full transition"
           >
-            Stop
+            🛑 Stop
           </button>
 
           <button
@@ -80,18 +80,25 @@ export default function AssistantPage() {
               resetTranscript();
               setMessage("");
             }}
-            className="bg-purple-400 hover:bg-purple-500 text-white px-4 py-2 rounded"
+            className="bg-gradient-to-r from-purple-400 to-purple-600 hover:shadow-lg text-white px-4 py-2 rounded-full transition"
           >
-            Clear
+            🧹 Clear
           </button>
         </div>
 
-        <p className="text-sm text-gray-600 mt-1">
-          🎙️ Mic status: {listening ? "Listening..." : "Stopped"}
+        <p className="text-sm text-gray-600 mt-2">
+          🎙️ Mic status:{" "}
+          <span className={listening ? "text-green-500 font-medium" : "text-red-500"}>
+            {listening ? "Listening..." : "Stopped"}
+          </span>
         </p>
       </div>
 
-      {loading && <p className="text-blue-500">Loading products...</p>}
+      {loading && (
+        <p className="text-blue-500 text-center font-medium animate-pulse mt-4">
+          Loading products...
+        </p>
+      )}
 
       {response && (
         <div className="mt-6">
@@ -100,4 +107,4 @@ export default function AssistantPage() {
       )}
     </div>
   );
-} 
+}
