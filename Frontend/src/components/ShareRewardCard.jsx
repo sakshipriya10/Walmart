@@ -44,8 +44,6 @@
 //   );
 // };
 
-// export default ShareRewardCard;
-
 import React from "react";
 import { toast } from "react-toastify";
 

@@ -48,7 +48,7 @@ UrbanEDGE Mart is a **next-gen smart e-commerce platform** designed to reimagine
 | React.js        | Node.js + Express| TensorFlow.js (COCO-SSD)| Clerk/Auth (optional) |
 | Tailwind CSS    | MongoDB + Mongoose | OpenRouter / Gemini API| React Router       |
 | React Carousel  | JWT Auth         | Voice Recognition (Web Speech API) | Figma (UI Design) |
-
+                  |cloudnary/nodemailer|OpenCV/MediaPipe/Numpy|
 ---
 
 
@@ -77,16 +77,22 @@ cd ../client
 npm install
 npm start
 
----
+```
 
-💡 Future Enhancements
+## Future Enhancements
 Product Try-on using 3D models
 Real-time chat assistant
 Enhanced search accuracy using embeddings
 Admin dashboard for inventory control
+---
 
-👨‍💻
 - Deployed link
 - Video demo link
-- Teammate credits 
+---
+
+- # Contributors 
+Aarti Kumari
+Komal Kumari
+Anjali Rani 
+Sakshi Priya
 
