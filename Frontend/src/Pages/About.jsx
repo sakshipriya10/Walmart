@@ -72,7 +72,7 @@ const About = () => {
           <p className="text-gray-700 mb-6">
             Shop smart. Look great. Experience more.
           </p>
-          <Link to="/">
+          <Link to="/products">
             <button className="px-6 py-3 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 text-white font-semibold rounded-full shadow-lg hover:shadow-[0_0_20px_#38bdf8] transition">
               Start Shopping
             </button>

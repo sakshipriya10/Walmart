@@ -92,7 +92,7 @@ const ChallengesQuests = ({ userId }) => {
           className="cursor-pointer bg-blue-100  p-4 rounded-lg text-center shadow-3xl ring-0  hover:ring-0 hover:bg-blue-300  hover:shadow-blue-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300 "
         >
           <p className="font-medium text-blue-800">
-            Review five products {reviewCnt}/3 {reviewCnt >= 3 && "✅"}
+            Review Three products {reviewCnt}/3 {reviewCnt >= 3 && "✅"}
           </p>
           <p className="text-sm text-blue-700">
             {reviewCnt >= 3 ? "+50 Bonus Points" : "Bonus Points"}
