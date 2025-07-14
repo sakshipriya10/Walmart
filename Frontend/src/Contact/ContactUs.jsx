@@ -61,7 +61,7 @@ const ContactForm = () => {
           placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full p-3 rounded-md bg-white shadow-sm text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          className="w-full p-3 rounded-md bg-white shadow-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
         {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
       </div>
@@ -73,7 +73,7 @@ const ContactForm = () => {
           placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
-          className="w-full p-3 rounded-md bg-white shadow-sm text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          className="w-full p-3 rounded-md bg-white shadow-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
   
 
@@ -87,7 +87,7 @@ const ContactForm = () => {
           value={formData.message}
           onChange={handleChange}
           rows="4"
-          className="w-full p-3 rounded-md bg-white shadow-sm text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+          className="w-full p-3 rounded-md bg-white shadow-md text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
         {errors.message && <p className="text-sm text-red-500 mt-1">{errors.message}</p>}
       </div>
@@ -119,7 +119,7 @@ const ContactUs16 = () => {
             <FaPhoneAlt className="text-pink-500" /> +91 12345 67890
           </div>
           <div className="flex items-center gap-3 text-gray-600">
-            <FaEnvelope className="text-pink-500" /> support@walmartclone.com
+            <FaEnvelope className="text-pink-500" /> support@urbanedgemart.com
           </div>
           <div className="flex items-center gap-3 text-gray-600">
             <FaMapMarkerAlt className="text-pink-500" /> Patna, Bihar, India
