@@ -18,9 +18,11 @@ UrbanEDGE Mart is a **next-gen smart e-commerce platform** designed to reimagine
 - Natural language understanding with AI backend (OpenRouter or Gemini)
 - Instant product results based on user intent
 
-### 🪄 Augmented Reality (AR)
-- Visualize products in your space
-- Seamless transition from object detection to AR try-on mode
+### 🪄 Gamified Shopping
+- Makes shopping more fun and interactive
+- Spin wheel and Scratch Cards for crazy deals and discounts 
+- Share products and get rewards 
+- leader board functionality according to bonous points
 
 ### ❤️ Wishlist & Cart
 - Add products to Wishlist with one click
@@ -49,11 +51,13 @@ UrbanEDGE Mart is a **next-gen smart e-commerce platform** designed to reimagine
 
 ---
 
+
+
 ## 📸 Screenshots
 
-| Assistants | virtualTryon | Gamified |
-|------------------|------------------|--------------|
-| ![Assistants](./public/screenshots/aiAssistants.png) | ![TryOn](./public/screenshots/.virtualTryOn.png) | ![Gamified](./public/screenshots/gamified.png) | ![urbanedge](./public/screenshots/urbanEdge.png) |
+|UrbanEDGE Mart|| Assistants | Virtual TryOn | Gamified |
+|------------|----------------|-----------|--------------|
+||![Urbanedge](./Frontend/public/screenshots/urbanEdge.png)| ![Assistants](./Frontend/public/screenshots/aiAssistants.png) | ![TryOn](./Frontend/public/screenshots/virtualTryOn.png) | ![Gamified](./Frontend/public/screenshots/gamified.png) |
 
 ---
 
@@ -73,7 +77,7 @@ cd ../client
 npm install
 npm start
 
-
+---
 
 💡 Future Enhancements
 Product Try-on using 3D models
