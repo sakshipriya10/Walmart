@@ -70,7 +70,7 @@ const Rewards = () => {
 
   return (
     <div className="bg-white p-4 rounded-xl shadow-md">
-      <h2 className="text-lg font-bold text-black mb-2">Rewards System</h2>
+      <h2 className="text-lg font-bold text-pink-600 mb-2">Rewards System</h2>
       <div className="w-full h-3 bg-gray-200 rounded-full mb-2">
         <div
           className="h-full bg-purple-500 rounded-full transition-all duration-300"

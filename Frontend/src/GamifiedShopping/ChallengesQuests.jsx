@@ -69,13 +69,13 @@ const ChallengesQuests = ({ userId }) => {
   return (
     <div className="bg-white p-4 rounded-xl shadow-md">
       <ToastContainer />
-      <h2 className="font-bold text-xl mb-4 text-black">Challenges & Quests</h2>
+      <h2 className="font-bold text-xl mb-4 text-pink-600">Challenges & Quests</h2>
 
       <div className="space-y-4">
         {/* ✅ Category Purchase Challenge */}
         
         <Link to="/products?fromChallenge=category">
-  <div className="cursor-pointer bg-pink-100 p-4 rounded-lg text-center shadow-3xl ring-0 hover:ring-0 hover:shadow-pink-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300">
+  <div className="cursor-pointer bg-pink-100 p-4 rounded-lg text-center shadow-3xl ring-0 hover:ring-0 hover:bg-pink-300 hover:shadow-pink-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300">
     <p className="font-medium text-pink-800">
       Buy from three different categories {catCount}/3 {catCount >= 3 && "✅"}
     </p>
@@ -89,7 +89,7 @@ const ChallengesQuests = ({ userId }) => {
         {/* ✅ Review Products Challenge */}
         <div
           onClick={() => navigate("/products?fromChallenge=review")}
-          className="cursor-pointer bg-blue-100  p-4 rounded-lg text-center shadow-3xl ring-0  hover:ring-0 hover:shadow-blue-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300 "
+          className="cursor-pointer bg-blue-100  p-4 rounded-lg text-center shadow-3xl ring-0  hover:ring-0 hover:bg-blue-300  hover:shadow-blue-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300 "
         >
           <p className="font-medium text-blue-800">
             Review five products {reviewCnt}/3 {reviewCnt >= 3 && "✅"}
@@ -102,7 +102,7 @@ const ChallengesQuests = ({ userId }) => {
         {/* ✅ Share Product Challenge */}
         <div
           onClick={() => navigate("/products?fromChallenge=share")}
-          className="cursor-pointer bg-purple-100 p-4 rounded-lg text-center shadow-3xl ring-0  hover:ring-0 hover:shadow-purple-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300 "
+          className="cursor-pointer bg-purple-100 p-4 rounded-lg text-center shadow-3xl ring-0  hover:ring-0 hover:bg-purple-300  hover:shadow-purple-500/80 hover:shadow-[0_0_20px_5px_rgba(236,72,153,0.6)] transition-all duration-300 "
         >
           <p className="font-medium text-purple-800">
             Share a product on social media {sharedDone ? "✅ Done" : ""}

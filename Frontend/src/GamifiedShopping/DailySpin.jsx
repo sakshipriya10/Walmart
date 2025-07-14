@@ -288,7 +288,7 @@ export default function DailySpin() {
 
   return (
     <div className="bg-white p-3 rounded-xl shadow-md text-center">
-      <h2 className="font-bold text-black text-xl mb-2">Daily Spin</h2>
+      <h2 className="font-bold text-pink-600 text-xl mb-2">Daily Spin</h2>
 
       <div className="relative mx-auto" style={{ width: 200, height: 200 }}>
         {/* Static Wheel */}

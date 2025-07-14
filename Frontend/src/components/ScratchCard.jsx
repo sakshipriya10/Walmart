@@ -43,7 +43,7 @@ const ScratchCard = () => {
       />
 
       <div
-        className="w-full max-w-xs h-40 bg-indigo-200 border border-yellow-300 flex items-center justify-center text-xl font-bold text-gray-800 cursor-pointer rounded-lg shadow-inner"
+        className="w-full max-w-xs h-40 bg-indigo-200 border border-blue-300 flex items-center justify-center text-xl font-bold text-pink-700 cursor-pointer rounded-lg shadow-inner"
         onClick={handleScratch}
       >
         {scratched ? `🎁 Coupon: ${rewardCode}` : "🎯 Scratch Me"}
@@ -51,7 +51,7 @@ const ScratchCard = () => {
 
       {scratched && (
         <>
-          <p className="mt-3 text-green-600 text-sm text-center">
+          <p className="mt-3 text-blue-900 text-sm text-center">
             🎉 You've unlocked a reward! Copy your coupon and shop now.
           </p>
           <button

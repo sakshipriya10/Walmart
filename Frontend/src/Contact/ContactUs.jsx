@@ -1,23 +1,36 @@
-
-import React, { useState } from "react";
-import UserMap from "./UserMap";
-
+ import React, { useState } from "react";
+import {
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+} from "react-icons/fa";
 
 const ContactForm = () => {
-	 const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-	const [status, setStatus] = useState("");
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("");
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.includes("@")) newErrors.email = "Enter a valid email";
+    if (!formData.message.trim()) newErrors.message = "Message cannot be empty";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setStatus("Sending...");
 
     try {
@@ -39,124 +52,94 @@ const ContactForm = () => {
     }
   };
 
-
-	return (
-	 <form className="lg:pt-2" onSubmit={handleSubmit}>
-      <div className="mb-3 mt-2">
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-4">
         <input
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Your Name"
           value={formData.name}
           onChange={handleChange}
-          className="min-h-10 leading-9 border-transparent dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
+          className="w-full p-3 rounded-md bg-white shadow-sm text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
       </div>
-      <div className="mb-3 mt-2">
+
+      <div className="mb-4">
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Email Address"
           value={formData.email}
           onChange={handleChange}
-          className="min-h-10 leading-9 border-transparent dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
+          className="w-full p-3 rounded-md bg-white shadow-sm text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+  
+
+        {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
       </div>
-      <div className="mb-3">
+
+      <div className="mb-4">
         <textarea
-          rows={3}
           name="message"
           placeholder="Your Message"
           value={formData.message}
           onChange={handleChange}
-          className="min-h-20 leading-9 border-transparent dark:bg-[#4E536C] p-2 rounded-md w-full focus:outline-none focus:border placeholder:opacity-60 focus:border-purple-400"
+          rows="4"
+          className="w-full p-3 rounded-md bg-white shadow-sm text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
         />
+        {errors.message && <p className="text-sm text-red-500 mt-1">{errors.message}</p>}
       </div>
-      <div className="text-end">
-        <button
-          type="submit"
-          className="w-full min-h-10 bg-pink-300 border border-pink-600 text-white px-5 py-2 hover:bg-pink-400 cursor-pointer transition rounded-4xl"
-        >
-          Send Message
-        </button>
-      </div>
-      <p className="mt-2 text-sm text-gray-600">{status}</p>
+
+      <button
+        type="submit"
+        className="w-full py-3 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 text-white font-semibold shadow-lg hover:scale-105 transition-transform hover:shadow-[0_0_15px_cyan] animate-bounce"
+      >
+        🚀 Send Message
+      </button>
+
+      <p className="mt-3 text-center text-sm text-gray-700">{status}</p>
     </form>
-
-	);
-};
-
-const Map = () => {
-	return (
-		<div
-			className="absolute top-0 bottom-0 right-0 bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100 bg-cover  bg-no-repeat bg-center min-h-[120px] h-full w-full lg:w-1/2 flex-none lg:flex"
-			style={{
-				backgroundImage:
-					'url("https://cdn.easyfrontend.com/pictures/googlemap.png")',
-			}}
-		>
-			<div className="opacity-0 md:opacity-100 absolute top-[35%] right-[30%] text-[#121315] min-w-[230px] ">
-				<img
-					src="https://cdn.easyfrontend.com/pictures/search1_3.png"
-					alt=""
-					className="w-full max-h-[150px]"
-				/>
-				<div className="flex items-center px-8 pt-8 pb-4 bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100">
-					<div>
-						<img
-							src="https://cdn.easyfrontend.com/pictures/logos/logo-1.png"
-							alt=""
-							className="max-w-[40px]"
-						/>
-					</div>
-					<div>
-						<p className="pl-3 text-sm pb-0">
-							1556 Broadway <br />
-							New York, NY <br />
-							10120, USA
-						</p>
-					</div>
-				</div>
-				<div className="text-3xl flex justify-center items-center text-blue-600 mt-[-10px]">
-  📍
-</div>
-
-			</div>
-		</div>
-	);
+  );
 };
 
 const ContactUs16 = () => {
-	return (
-		<section className="ezy__contact16 light bg-gradient-to-r from-pink-100 via-blue-100 to-pink-100  md:p-24 h-screen w-screen">
-		
-<div className="absolute top-0 bottom-0 right-0 w-full lg:w-1/2 h-full">
-  <UserMap />
-</div>
+  return (
+    <section className="min-h-screen w-screen bg-gradient-to-br from-cyan-50 via-white to-blue-100 flex items-center justify-center py-10 px-6">
+      <div className="max-w-5xl w-full grid md:grid-cols-2 gap-8 shadow-2xl rounded-3xl bg-gradient-to-br from-white via-blue-50 to-cyan-50 p-8 md:p-12">
+        {/* Left Info Section */}
+        <div className="flex flex-col justify-center space-y-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-pink-600">Contact Us</h2>
+          <p className="text-gray-700">
+            We'd love to hear from you! Fill out the form or connect with us directly.
+          </p>
 
+          <div className="flex items-center gap-3 text-gray-600">
+            <FaPhoneAlt className="text-pink-500" /> +91 12345 67890
+          </div>
+          <div className="flex items-center gap-3 text-gray-600">
+            <FaEnvelope className="text-pink-500" /> support@walmartclone.com
+          </div>
+          <div className="flex items-center gap-3 text-gray-600">
+            <FaMapMarkerAlt className="text-pink-500" /> Patna, Bihar, India
+          </div>
 
+          {/* Social Icons */}
+          <div className="flex gap-5 mt-4 text-xl text-pink-600">
+            <a href="#"><FaFacebook /></a>
+            <a href="#"><FaInstagram /></a>
+            <a href="#"><FaLinkedin /></a>
+          </div>
+        </div>
 
-
-			<div className="container px-4 mx-auto">
-				<div className="grid grid-cols-12 gap-4">
-					<div className="col-span-12 lg:col-span-6 z-50">
-						<div className="flex justify-center lg:justify-end">
-							<div className="w-[450px] border-none rounded-3xl bg-purple-50 dark:bg-[#404156]">
-								<div className="p-12 lg:p-10 xl:p-12">
-									<h2 className="font-bold text-l lg:text-4xl leading-none mb-4 text-pink-500">
-										How Can We Help You?
-									</h2>
-
-									<ContactForm />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+        {/* Right Form Section */}
+        <div className="bg-white bg-opacity-70 p-6 md:p-8 rounded-2xl shadow-xl">
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+  );
 };
 
-
- export default ContactUs16;
+export default ContactUs16;
