@@ -51,11 +51,9 @@ UrbanEDGE Mart is a **next-gen smart e-commerce platform** designed to reimagine
 
 ## 📸 Screenshots
 
-| Assistants | virtualTryon | Gamified |
-|------------------|------------------|--------------|
-| ![Assistants](./public/screenshots/aiAssistants.png) | ![TryOn](./public/screenshots/.virtualTryOn.png) | ![Gamified](./public/screenshots/gamified.png) | ![urbanedge](./public/screenshots/urbanEdge.png) |
-
----
+| Assistants | Virtual Try-On | Gamified | Urban Edge |
+|------------|----------------|----------|------------|
+| ![Assistants](./frontend/public/screenshots/aiAssistants.png) | ![TryOn](./frontend/public/screenshots/virtualTryOn.png) | ![Gamified](./frontend/public/screenshots/gamified.png) | ![Urban Edge](./frontend/public/screenshots/urbanEdge.png) |
 
 ## 🛠️ Installation & Setup
 
