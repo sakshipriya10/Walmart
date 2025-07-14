@@ -1,19 +1,4 @@
-// import User from "../models/userModel.js";
 
-
-// export const shareProduct = async (req, res) => {
-//   try {
-//     const userId = req.user.id; // ✅ this must exist
-//     console.log("User ID:", userId); // Debug log
-
-//     // Continue your logic (update points, etc.)
-
-//     res.status(200).json({ message: 'Shared successfully!' });
-//   } catch (err) {
-//     console.error("Error in shareProduct:", err.message);
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// };
 
 import { Challenge } from "../models/challengeModel.js"; 
  // Or wherever your Challenge model is declared

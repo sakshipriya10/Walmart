@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function PlaceOrder() {
   const [cart, setCart] = useState([]);
@@ -32,11 +35,13 @@ export default function PlaceOrder() {
 }, []);
 
 
- const handlePlaceOrder = async () => {
+const handlePlaceOrder = async () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("User:", user.id);
-  console.log("Cart:", cart);
-  console.log("Address:", address);
+  const formattedItems = cart.map(item => ({
+    product: item._id || item.product?._id,
+    qty: item.qty,
+  }));
+
 
   if (!user || !user.id || !address || cart.length === 0) {
     alert("Missing required information");
@@ -47,22 +52,34 @@ export default function PlaceOrder() {
     const res = await axios.post("http://localhost:5000/api/order/place", {
       userId: user.id,
       addressId: address._id,
-      items: cart,
+      items: formattedItems,
     });
 
-    alert("✅ Order placed successfully!");
+    const message = res.data?.message || "✅ Order placed!";
+    
+    // 🎉 Show toast based on backend message
+    if (message.includes("earned 50")) {
+      toast.success(message); // reward toast
+    } else {
+      toast.info(message);    // generic order toast
+    }
+
     localStorage.removeItem("cartItems");
     localStorage.removeItem("selectedAddressId");
-    navigate("/orders");
+
+    setTimeout(() => navigate("/orders"), 2000); // slight delay so toast shows
 
   } catch (err) {
     console.error("Order failed:", err);
-    alert("Order placement failed. Please try again.");
+    toast.error("Order placement failed. Please try again.");
   }
 };
 
+
   return (
+    
     <div className="w-screen min-h-screen flex flex-col items-center bg-gradient-to-br from-pink-100 to-blue-100 py-8 px-4">
+     <ToastContainer position="top-center" autoClose={2500} />
 
       <h2 className="text-2xl font-bold text-pink-700 mb-6">Confirm Your Order</h2>
 
