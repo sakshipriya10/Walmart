@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ScratchModal from "./ScratchModal";
+ // adjust if needed
 
 const FeaturedProducts = () => {
   const [trending, setTrending] = useState([]);
+  const [showScratch, setShowScratch] = useState(false); // ✅ added
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +33,10 @@ const FeaturedProducts = () => {
           {trending.map((product) => (
             <div
               key={product._id}
-              onClick={() => navigate(`/products/${product._id}`)}
+              onClick={() => {
+                navigate(`/products/${product._id}`);
+                setShowScratch(true); // ✅ trigger reward
+              }}
               className="cursor-pointer bg-white rounded-xl p-4 shadow hover:shadow-lg transition"
             >
               <img
@@ -48,6 +54,11 @@ const FeaturedProducts = () => {
         </div>
       ) : (
         <p className="text-center text-gray-500">No trending products right now.</p>
+      )}
+
+      {/* ✅ Scratch Reward Modal */}
+      {showScratch && (
+        <ScratchModal isOpen={showScratch} onClose={() => setShowScratch(false)} />
       )}
     </div>
   );
